@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ポケット・アルカナ｜大アルカナ22枚のタロット</title>
+<meta name="description" content="カードが手元にない日のための、大アルカナ22枚。登録不要・ブラウザだけで引けるタロット。ワンオラクル、スリーカード、ケルト十字、枚数自由のフリースプレッドに対応。解釈を出さないリーダーモード付き。">
+<meta name="theme-color" content="#0d0b1a">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ポケット・アルカナ｜大アルカナ22枚のタロット">
+<meta property="og:description" content="カードが手元にない日のための、大アルカナ22枚。">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ポケット・アルカナ">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23161034'/%3E%3Cpath d='M32 10l6 15 15 6-15 6-6 15-6-15-15-6 15-6z' fill='none' stroke='%23d4b25f' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0d0b1a; --bg2:#171233;
+    --gold:#d4b25f; --gold-dim:#8d7434; --gold-soft:#e8d9a8;
+    --ink:#efe9dd; --muted:#a49bc4; --rev:#dd9090;
+    --line:rgba(212,178,95,.22);
+    --cw:152px; --ch:250px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;background:#0b0918;}
+  body{
+    margin:0; min-height:100vh; color:var(--ink);
+    font-family:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP",serif;
+    background:
+      radial-gradient(ellipse at 20% 0%, #2a1f5c 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 12%, #3a2151 0%, transparent 50%),
+      linear-gradient(180deg,var(--bg) 0%, var(--bg2) 60%, #0b0918 100%);
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.9;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 22%, #fff8, transparent),
+      radial-gradient(1.5px 1.5px at 68% 12%, #fff6, transparent),
+      radial-gradient(1px 1px at 35% 68%, #fff7, transparent),
+      radial-gradient(1.5px 1.5px at 88% 55%, #fff5, transparent),
+      radial-gradient(1px 1px at 52% 40%, #fff6, transparent),
+      radial-gradient(1px 1px at 24% 88%, #fff5, transparent),
+      radial-gradient(1.5px 1.5px at 78% 82%, #fff6, transparent),
+      radial-gradient(1px 1px at 6% 46%, #fff5, transparent),
+      radial-gradient(1px 1px at 94% 30%, #fff5, transparent);
+  }
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:42px 20px 90px;}
+
+  header{text-align:center;margin-bottom:26px;}
+  h1{margin:0 0 10px;font-size:clamp(26px,5vw,40px);letter-spacing:.24em;font-weight:400;
+     color:var(--gold);text-shadow:0 0 26px rgba(212,178,95,.35);}
+  .sub{margin:0;color:var(--muted);font-size:12px;letter-spacing:.3em;}
+  .rule{width:220px;height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+
+  .nav{display:flex;justify-content:center;gap:6px;margin:26px 0 30px;flex-wrap:wrap;}
+  .nav button{
+    background:none;border:1px solid transparent;border-bottom:1px solid var(--line);
+    color:var(--muted);font-family:inherit;font-size:13px;letter-spacing:.2em;
+    padding:9px 20px;cursor:pointer;transition:.2s;
+  }
+  .nav button:hover{color:var(--gold-soft);}
+  .nav button.active{color:var(--gold);border-color:var(--line);border-radius:8px 8px 0 0;
+    background:linear-gradient(180deg,rgba(212,178,95,.16),transparent);}
+
+  .panel{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:22px;}
+  .field{margin-bottom:18px;}
+  label.cap{display:block;font-size:11px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px;}
+  input[type=text]{
+    width:100%;padding:12px 14px;border-radius:9px;border:1px solid rgba(212,178,95,.28);
+    background:rgba(0,0,0,.28);color:var(--ink);font-family:inherit;font-size:15px;outline:none;
+  }
+  input[type=text]:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,178,95,.12);}
+
+  .spreads{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+  .spread-btn{
+    padding:13px 10px;border-radius:10px;cursor:pointer;border:1px solid rgba(212,178,95,.3);
+    background:rgba(0,0,0,.25);color:var(--ink);font-family:inherit;font-size:14px;
+    letter-spacing:.06em;transition:.2s;text-align:center;line-height:1.75;
+  }
+  .spread-btn small{display:block;font-size:10.5px;color:var(--muted);letter-spacing:.03em;}
+  .spread-btn:hover{border-color:var(--gold);background:rgba(212,178,95,.1);}
+  .spread-btn.active{background:linear-gradient(180deg,rgba(212,178,95,.3),rgba(212,178,95,.1));
+    border-color:var(--gold);color:#fff;}
+
+  .opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .toggle{
+    display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;
+    border:1px solid var(--line);border-radius:999px;padding:8px 15px 8px 11px;
+    font-size:12.5px;letter-spacing:.08em;color:var(--muted);transition:.2s;background:rgba(0,0,0,.2);
+  }
+  .toggle:hover{border-color:rgba(212,178,95,.5);}
+  .toggle .dot{width:30px;height:16px;border-radius:999px;background:rgba(255,255,255,.14);
+    position:relative;transition:.2s;flex:none;}
+  .toggle .dot::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;
+    border-radius:50%;background:#8b83a8;transition:.2s;}
+  .toggle.on{color:var(--gold-soft);border-color:rgba(212,178,95,.45);}
+  .toggle.on .dot{background:rgba(212,178,95,.4);}
+  .toggle.on .dot::after{left:16px;background:var(--gold);}
+
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;}
+  .btn{padding:13px 30px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:14.5px;
+    letter-spacing:.16em;border:1px solid var(--gold);
+    background:linear-gradient(180deg,#e0c477,#a8863c);color:#241a05;font-weight:600;transition:.2s;}
+  .btn:hover{filter:brightness(1.12);box-shadow:0 6px 22px rgba(212,178,95,.28);}
+  .btn.ghost{background:transparent;color:var(--gold);font-weight:400;}
+  .btn.ghost:hover{background:rgba(212,178,95,.12);box-shadow:none;}
+  .btn.sm{padding:9px 18px;font-size:12.5px;letter-spacing:.12em;}
+  .btn:disabled{opacity:.35;cursor:not-allowed;filter:none;box-shadow:none;}
+
+  /* ---- fan (manual pick) ---- */
+  .fan-wrap{margin-top:38px;text-align:center;}
+  .fan-title{font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px;}
+  .fan-note{font-size:12px;color:var(--muted);letter-spacing:.1em;margin-bottom:22px;}
+  .fan{display:flex;justify-content:center;padding:30px 0 40px;flex-wrap:wrap;}
+  .fan-card{
+    width:62px;height:104px;border-radius:7px;margin-left:-22px;cursor:pointer;flex:none;
+    background:repeating-linear-gradient(45deg,rgba(212,178,95,.12) 0 4px,transparent 4px 8px),
+               linear-gradient(160deg,#2b2160,#150f33);
+    border:1px solid rgba(212,178,95,.4);box-shadow:0 6px 14px rgba(0,0,0,.5);
+    transition:transform .25s, box-shadow .25s, opacity .25s;
+    display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:15px;opacity:.95;
+  }
+  .fan-card:first-child{margin-left:0;}
+  .fan-card:hover{transform:translateY(-16px) scale(1.05);box-shadow:0 14px 26px rgba(0,0,0,.6);z-index:5;}
+  .fan-card.picked{opacity:.28;transform:translateY(10px);pointer-events:none;box-shadow:none;}
+  .fan-count{font-size:12px;letter-spacing:.2em;color:var(--gold-soft);}
+
+  /* ---- board ---- */
+  .stage{margin-top:36px;}
+  .question-echo{text-align:center;color:var(--muted);font-size:14px;margin-bottom:8px;letter-spacing:.08em;}
+  .question-echo b{color:var(--gold);font-weight:400;}
+  .hint{text-align:center;color:var(--muted);font-size:12.5px;letter-spacing:.14em;margin:16px 0 24px;}
+  .board{display:flex;flex-wrap:wrap;justify-content:center;gap:26px 20px;}
+  .slot{width:var(--cw);text-align:center;}
+  .pos{font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:9px;min-height:15px;}
+  .card{position:relative;width:var(--cw);height:var(--ch);cursor:pointer;perspective:1200px;}
+  .inner{position:relative;width:100%;height:100%;transition:transform .85s cubic-bezier(.4,.1,.2,1);
+    transform-style:preserve-3d;}
+  .card.flipped .inner{transform:rotateY(180deg);}
+  .face{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .back{
+    background:repeating-linear-gradient(45deg,rgba(212,178,95,.10) 0 6px,transparent 6px 12px),
+               repeating-linear-gradient(-45deg,rgba(212,178,95,.10) 0 6px,transparent 6px 12px),
+               linear-gradient(160deg,#2b2160,#150f33);
+    border:1px solid rgba(212,178,95,.45);
+    box-shadow:0 10px 26px rgba(0,0,0,.5), inset 0 0 40px rgba(0,0,0,.5);
+    transition:transform .3s, box-shadow .3s;
+  }
+  .card:not(.flipped):hover .back{transform:translateY(-6px);box-shadow:0 18px 34px rgba(0,0,0,.6);}
+  .back-frame{width:80%;height:88%;border:1px solid rgba(212,178,95,.4);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;}
+  .back-mark{font-size:34px;color:var(--gold);opacity:.85;text-shadow:0 0 16px rgba(212,178,95,.6);}
+  .front{transform:rotateY(180deg);background:linear-gradient(170deg,#241c52,#15102f);
+    border:1px solid var(--gold-dim);box-shadow:0 10px 30px rgba(0,0,0,.55), inset 0 0 50px rgba(0,0,0,.45);
+    padding:9px;}
+  .front-inner{width:100%;height:100%;border:1px solid rgba(212,178,95,.35);border-radius:6px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 5px;}
+  .front-inner.reversed{transform:rotate(180deg);}
+  .numeral{font-size:11.5px;letter-spacing:.2em;color:var(--gold);opacity:.9;}
+  .art{width:64%;max-width:96px;color:var(--gold);filter:drop-shadow(0 0 8px rgba(212,178,95,.4));}
+  .art svg{width:100%;height:auto;display:block;}
+  .cname{font-size:15px;letter-spacing:.1em;color:#fff;}
+  .cen{font-size:8.5px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;}
+  .divider{width:44px;height:1px;background:var(--gold-dim);margin:3px 0;}
+  .orient{margin-top:10px;font-size:11.5px;letter-spacing:.2em;min-height:17px;}
+  .orient.up{color:var(--gold);}
+  .orient.rev{color:var(--rev);}
+
+  /* ---- celtic cross ---- */
+  .board.celtic{--cw:104px;--ch:172px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:24px 10px;justify-items:center;align-items:start;max-width:660px;margin:0 auto;}
+  .board.celtic .slot{width:var(--cw);}
+  .board.celtic .pos{font-size:9.5px;letter-spacing:.06em;line-height:1.5;height:30px;overflow:hidden;}
+  .board.celtic .cname{font-size:10.5px;line-height:1.35;}
+  .board.celtic .cen{display:none;}
+  .board.celtic .art{width:56%;}
+  .board.celtic .numeral{font-size:10px;}
+  .board.celtic .orient{font-size:10px;letter-spacing:.1em;}
+  .cross{width:var(--cw);grid-row:2;grid-column:2;}
+  .cross-stack{position:relative;width:var(--cw);height:var(--ch);}
+  .cross-stack .card{position:absolute;top:0;left:0;}
+  .cross-b{position:absolute;top:0;left:0;width:var(--cw);height:var(--ch);
+    transform:rotate(90deg);z-index:4;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));}
+  .orient-pair{display:flex;flex-direction:column;gap:1px;}
+
+  /* ---- summary & readings ---- */
+  .summary{margin-top:44px;border:1px solid rgba(212,178,95,.35);border-radius:14px;padding:24px;
+    background:linear-gradient(180deg,rgba(212,178,95,.1),rgba(255,255,255,.03));}
+  .summary h3{margin:0 0 14px;font-size:14px;letter-spacing:.24em;color:var(--gold);font-weight:400;}
+  .summary p{margin:0 0 10px;line-height:2;font-size:15px;color:#e6e0f2;}
+  .summary p:last-child{margin-bottom:0;}
+  .meter{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px;}
+  .chip{font-size:11.5px;letter-spacing:.1em;border:1px solid var(--line);border-radius:999px;
+    padding:5px 13px;color:var(--muted);}
+  .chip b{color:var(--gold-soft);font-weight:400;}
+
+  .readings{margin-top:20px;display:flex;flex-direction:column;gap:16px;}
+  .reading{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);
+    padding:20px 22px;opacity:0;transform:translateY(12px);animation:rise .55s ease forwards;}
+  @keyframes rise{to{opacity:1;transform:none;}}
+  .reading.rev{border-color:rgba(221,144,144,.28);}
+  .r-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:13px;}
+  .r-mini{width:34px;flex:none;color:var(--gold);}
+  .r-mini svg{width:100%;height:auto;display:block;}
+  .r-pos{font-size:10.5px;letter-spacing:.2em;color:var(--muted);border:1px solid var(--line);
+    padding:3px 10px;border-radius:999px;}
+  .r-name{font-size:18px;color:var(--gold);letter-spacing:.08em;}
+  .r-orient{font-size:11.5px;letter-spacing:.16em;}
+  .r-keys{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .key{font-size:12px;padding:4px 11px;border-radius:999px;background:rgba(212,178,95,.13);
+    color:var(--gold-soft);letter-spacing:.06em;}
+  .r-text{margin:0;line-height:2.05;font-size:15px;color:#ded7ea;}
+  .r-adv{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);
+    font-size:13.5px;color:var(--muted);letter-spacing:.04em;line-height:1.9;}
+  .r-adv b{color:var(--gold-soft);font-weight:400;letter-spacing:.14em;font-size:11px;margin-right:10px;}
+
+  /* ---- daily ---- */
+  .daily{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:28px;
+    border:1px solid var(--line);border-radius:14px;padding:20px 22px;background:rgba(255,255,255,.03);}
+  .daily .card{--cw:104px;--ch:172px;}
+  .daily-body{flex:1 1 240px;min-width:0;}
+  .daily-body h3{margin:0 0 8px;font-size:12px;letter-spacing:.24em;color:var(--gold);font-weight:400;}
+  .daily-body .dname{font-size:19px;color:#fff;letter-spacing:.08em;margin-bottom:8px;}
+  .daily-body p{margin:0;font-size:14px;line-height:1.95;color:#ddd6ea;}
+  .daily-body .tap{color:var(--muted);font-size:12.5px;letter-spacing:.14em;}
+
+  /* ---- codex ---- */
+  .codex{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px;}
+  .cx{border:1px solid var(--line);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;
+    background:linear-gradient(170deg,rgba(36,28,82,.7),rgba(21,16,47,.7));transition:.2s;}
+  .cx:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 10px 22px rgba(0,0,0,.45);}
+  .cx .art{width:54px;margin:0 auto 8px;}
+  .cx .n{font-size:10px;letter-spacing:.16em;color:var(--gold);}
+  .cx .j{font-size:13px;color:#fff;letter-spacing:.06em;margin-top:3px;}
+  .cx .e{font-size:8px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+
+  /* ---- history ---- */
+  .hist{display:flex;flex-direction:column;gap:12px;}
+  .hrow{border:1px solid var(--line);border-radius:11px;padding:15px 18px;background:rgba(255,255,255,.03);
+    display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .hrow .when{font-size:11.5px;color:var(--muted);letter-spacing:.1em;flex:none;}
+  .hrow .what{flex:1 1 200px;min-width:0;}
+  .hrow .sp{font-size:12px;color:var(--gold);letter-spacing:.14em;}
+  .hrow .cards{font-size:13px;color:#ddd6ea;margin-top:4px;line-height:1.7;}
+  .hrow .q{font-size:12px;color:var(--muted);margin-top:4px;}
+  .empty{text-align:center;color:var(--muted);font-size:13.5px;letter-spacing:.1em;padding:50px 0;line-height:2;}
+
+  /* ---- modal ---- */
+  .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal.open{display:flex;}
+  .modal-bg{position:absolute;inset:0;background:rgba(6,4,16,.82);backdrop-filter:blur(4px);}
+  .modal-box{position:relative;max-width:520px;width:100%;max-height:86vh;overflow:auto;
+    border:1px solid rgba(212,178,95,.4);border-radius:16px;padding:28px;
+    background:linear-gradient(170deg,#241c52,#140f2e);box-shadow:0 24px 60px rgba(0,0,0,.7);
+    animation:pop .3s ease;}
+  @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97);}to{opacity:1;transform:none;}}
+  .modal-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);
+    font-size:24px;cursor:pointer;line-height:1;padding:6px;}
+  .modal-close:hover{color:var(--gold);}
+  .m-art{width:96px;margin:4px auto 14px;color:var(--gold);filter:drop-shadow(0 0 12px rgba(212,178,95,.4));}
+  .m-title{text-align:center;margin-bottom:6px;}
+  .m-title .n{font-size:11px;letter-spacing:.24em;color:var(--gold);}
+  .m-title .j{font-size:24px;color:#fff;letter-spacing:.1em;margin:6px 0 3px;}
+  .m-title .e{font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;}
+  .m-el{text-align:center;font-size:11.5px;color:var(--muted);letter-spacing:.14em;margin:12px 0 20px;}
+  .m-sec{border-top:1px solid var(--line);padding-top:16px;margin-top:16px;}
+  .m-sec h4{margin:0 0 10px;font-size:12px;letter-spacing:.2em;font-weight:400;}
+  .m-sec.up h4{color:var(--gold);}
+  .m-sec.rev h4{color:var(--rev);}
+  .m-sec p{margin:10px 0 0;font-size:14px;line-height:2;color:#ded7ea;}
+
+  .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+    background:rgba(20,14,44,.95);border:1px solid var(--gold);color:var(--gold-soft);
+    padding:11px 24px;border-radius:999px;font-size:13px;letter-spacing:.12em;z-index:60;
+    opacity:0;pointer-events:none;transition:.3s;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .tagline{margin:16px 0 0;font-size:14px;color:#d8d0ea;letter-spacing:.14em;}
+  .lead{margin:9px 0 0;font-size:11.5px;color:var(--muted);letter-spacing:.08em;line-height:2;}
+  .free-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .free-row input[type=number]{width:96px;padding:12px;border-radius:9px;border:1px solid rgba(212,178,95,.28);
+    background:rgba(0,0,0,.28);color:var(--ink);font-family:inherit;font-size:15px;outline:none;text-align:center;}
+  .free-row input[type=text]{flex:1 1 260px;}
+  .memo-box{margin-top:30px;border:1px solid var(--line);border-radius:12px;padding:18px 20px;
+    background:rgba(255,255,255,.03);}
+  .memo-box textarea{width:100%;padding:12px 14px;border-radius:9px;border:1px solid rgba(212,178,95,.28);
+    background:rgba(0,0,0,.28);color:var(--ink);font-family:inherit;font-size:14.5px;line-height:1.9;
+    outline:none;resize:vertical;}
+  .memo-box textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,178,95,.1);}
+  .banner{border:1px solid rgba(212,178,95,.45);background:rgba(212,178,95,.1);border-radius:12px;
+    padding:15px 18px;margin-bottom:22px;text-align:center;font-size:13.5px;color:var(--gold-soft);
+    letter-spacing:.08em;line-height:1.9;}
+  .memo-line{font-size:12px;color:var(--gold-soft);margin-top:5px;white-space:pre-wrap;}
+  .view{display:none;}
+  .view.active{display:block;animation:rise .4s ease;}
+  footer{margin-top:64px;text-align:center;color:var(--muted);font-size:11px;letter-spacing:.16em;line-height:2;}
+
+  @media(max-width:560px){
+    :root{--cw:132px;--ch:218px;}
+    .board{gap:20px 14px;}
+    .board.celtic{--cw:74px;--ch:122px;gap:14px 6px;}
+    .board.celtic .cname{font-size:8.5px;}
+    .board.celtic .numeral{font-size:8px;}
+    .board.celtic .cross{height:calc(var(--ch) + 30px);}
+    .board.celtic .pos{font-size:8.5px;letter-spacing:.06em;}
+    .fan-card{width:46px;height:78px;margin-left:-18px;}
+    .wrap{padding:32px 14px 70px;}
+    .panel{padding:18px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>POCKET ARCANA</h1>
+    <p class="sub">ポ ケ ッ ト ・ ア ル カ ナ</p>
+    <div class="rule"></div>
+    <p class="tagline">カードが手元にない日の、大アルカナ22枚。</p>
+    <p class="lead">そのまま占ってもいいし、リーディングの下敷きにしてもいい。<br>
+    登録不要・通信なし。すべてこのページの中だけで動きます。</p>
+    <nav class="nav">
+      <button data-view="read" class="active">占う</button>
+      <button data-view="codex">カード図鑑</button>
+      <button data-view="history">履歴</button>
+    </nav>
+  </header>
+
+  <!-- ============ 占う ============ -->
+  <section class="view active" id="view-read">
+    <div class="daily" id="daily"></div>
+
+    <div class="panel">
+      <div class="field">
+        <label class="cap" for="q">占いたいこと（任意）</label>
+        <input type="text" id="q" placeholder="例：これから始める仕事はうまくいく？" maxlength="60">
+      </div>
+      <div class="field">
+        <label class="cap">スプレッドを選ぶ</label>
+        <div class="spreads" id="spreads"></div>
+      </div>
+      <div class="field" id="freeBox" style="display:none">
+        <label class="cap">フリースプレッドの設定</label>
+        <div class="free-row">
+          <input type="number" id="freeN" min="1" max="22" value="3" aria-label="枚数">
+          <input type="text" id="freePos" maxlength="120"
+                 placeholder="ポジション名をカンマ区切りで（省略可）例：現状, 課題, 助言">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label class="cap">設定</label>
+        <div class="opts">
+          <div class="toggle" id="t-manual"><span class="dot"></span><span>自分でカードを選ぶ</span></div>
+          <div class="toggle on" id="t-rev"><span class="dot"></span><span>逆位置を使う</span></div>
+          <div class="toggle" id="t-sound"><span class="dot"></span><span>効果音</span></div>
+          <div class="toggle" id="t-reader"><span class="dot"></span><span>リーダーモード（解釈を出さない）</span></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="draw">カードを引く</button>
+        <button class="btn ghost" id="reset" disabled>リセット</button>
+      </div>
+    </div>
+
+    <div id="fanArea"></div>
+    <div class="stage" id="stage"></div>
+  </section>
+
+  <!-- ============ 図鑑 ============ -->
+  <section class="view" id="view-codex">
+    <p class="hint">22枚それぞれの意味を確認できます。カードをタップすると詳細が開きます。</p>
+    <div class="codex" id="codex"></div>
+  </section>
+
+  <!-- ============ 履歴 ============ -->
+  <section class="view" id="view-history">
+    <div class="actions" style="margin:0 0 22px;justify-content:flex-end">
+      <button class="btn ghost sm" id="clearHist">履歴をすべて削除</button>
+    </div>
+    <div class="hist" id="hist"></div>
+  </section>
+
+  <footer>
+    占いは背中を押すためのもの。最後に決めるのは、あなた自身です。<br>
+    ポケット・アルカナ ／ Pocket Arcana ── Major Arcana 0 – XXI
+  </footer>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-bg"></div>
+  <div class="modal-box" id="modalBox"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   大アルカナ 22枚
+   ============================================================ */
+const DECK = [
+{n:0,r:"0",ja:"愚者",en:"The Fool",el:"天王星",
+ art:'<circle cx="24" cy="16" r="4"/><path d="M24 20v14"/><path d="M17 28l14-5"/><path d="M24 34l-5 12M24 34l6 11"/><path d="M31 23l3-8"/><path d="M8 50h34v8"/><circle cx="47" cy="14" r="2.4"/>',
+ up:{k:["自由","無邪気","出発"],a:"損得より、心が動くほうへ。",
+  t:"まだ何も決まっていないからこそ、どこへでも行ける時。常識や損得をいったん脇に置いて、心が惹かれるほうへ一歩踏み出してください。無計画に見えても、その軽やかさが今のあなたの武器です。"},
+ rev:{k:["軽率","無責任","現実逃避"],a:"動く前に、足元をひと目見て。",
+  t:"自由と気まぐれを取り違えているのかもしれません。思いつきで動く前に、足元と約束事を確認して。逃げ出したい気持ちの正体を見つめると、進む道が定まります。"}},
+
+{n:1,r:"I",ja:"魔術師",en:"The Magician",el:"水星",
+ art:'<path d="M32 8v18"/><path d="M32 42c-4-6-12-6-12 0s8 6 12 0 12-6 12 0-8 6-12 0z"/><path d="M12 54h40"/><path d="M26 26h12"/>',
+ up:{k:["創造","才能","始まり"],a:"最初の一手を、今日打つ。",
+  t:"必要な道具はすでに手の中にあります。あとはそれを使うと決めるだけ。あなたの言葉と行動には、今、ものごとを動かす力が宿っています。最初の一手を惜しまないで。"},
+ rev:{k:["準備不足","口先だけ","停滞"],a:"始める前に、腕を磨く時間を。",
+  t:"意欲はあるのに、空回りしている気配。技術や情報が足りないなら、始める前に整えるほうが早道です。うまい話には裏がないか確かめて。"}},
+
+{n:2,r:"II",ja:"女教皇",en:"The High Priestess",el:"月",
+ art:'<path d="M14 12v42M50 12v42"/><path d="M14 20h36"/><path d="M38 46a9 9 0 1 1-6-15 7 7 0 0 0 6 15z"/>',
+ up:{k:["直感","知性","静けさ"],a:"静かな場所で、自分に訊く。",
+  t:"騒がしい意見よりも、自分の内側の静かな声が正しい時。感情的に動かず、事実と直感の両方を落ち着いて見つめてください。答えはもう分かっているはずです。"},
+ rev:{k:["神経質","思い込み","感情的"],a:"ひとりで抱えず、言葉にする。",
+  t:"考えすぎて、事実と不安の区別がつかなくなっています。潔癖に正しさを求めるほど息苦しくなるもの。誰かに素直に打ち明けると、視界がひらけます。"}},
+
+{n:3,r:"III",ja:"女帝",en:"The Empress",el:"金星",
+ art:'<path d="M18 28l4-11 10 7 10-7 4 11z"/><path d="M18 28h28"/><path d="M32 54c-9-6-13-11-13-16a6.5 6.5 0 0 1 13-2 6.5 6.5 0 0 1 13 2c0 5-4 10-13 16z"/>',
+ up:{k:["豊かさ","愛情","実り"],a:"惜しまず与えると、返ってくる。",
+  t:"与えることが、そのまま自分の実りになる時期。人にも自分にも惜しまず手をかけてください。心地よさや美しさを大事にするほど、物事は育っていきます。"},
+ rev:{k:["浪費","依存","怠惰"],a:"いったん、手を離してみる。",
+  t:"甘やかしと優しさの境目が曖昧になっているようです。与えすぎ、使いすぎ、寄りかかりすぎ——どれかに心当たりがあるなら、いったん手を離してみて。"}},
+
+{n:4,r:"IV",ja:"皇帝",en:"The Emperor",el:"牡羊座",
+ art:'<path d="M20 18l3-9 9 6 9-6 3 9z"/><path d="M20 18h24"/><path d="M18 54V30h28v24"/><path d="M18 42h28"/>',
+ up:{k:["責任","統率","安定"],a:"自分で決めて、自分で引き受ける。",
+  t:"自分の領域を自分で治める覚悟が問われています。ルールを決め、判断を引き受けるほど状況は安定します。頼れる年上の存在が力を貸してくれることも。"},
+ rev:{k:["独善","傲慢","未熟"],a:"引き受ける範囲を、決め直す。",
+  t:"力の使い方が乱暴になっていませんか。押し通すほど反発を招きます。逆に、責任から逃げている場合も。どちらにせよ「引き受ける範囲」を決め直す時です。"}},
+
+{n:5,r:"V",ja:"教皇",en:"The Hierophant",el:"牡牛座",
+ art:'<path d="M32 10v44"/><path d="M27 20h10"/><path d="M24 30h16"/><path d="M21 40h22"/><path d="M14 26v28M50 26v28"/>',
+ up:{k:["信頼","導き","誠実"],a:"経験のある人に、素直に訊く。",
+  t:"信頼できる人に相談することで道がひらけます。奇策より、正攻法と誠実さが評価される場面。学ぶ姿勢を持てば、良き師や仲間に恵まれるでしょう。"},
+ rev:{k:["束縛","不信","建前"],a:"ありがた迷惑は、丁寧に断る。",
+  t:"しきたりや周囲の期待に縛られて、本音が言えなくなっています。ありがた迷惑な助言は、丁寧に断ってかまいません。自分の基準を持ち直して。"}},
+
+{n:6,r:"VI",ja:"恋人",en:"The Lovers",el:"双子座",
+ art:'<circle cx="24" cy="40" r="11"/><circle cx="40" cy="40" r="11"/><circle cx="32" cy="14" r="5"/><path d="M32 5v3M32 20v3M22 14h3M39 14h3"/>',
+ up:{k:["恋愛","選択","調和"],a:"自然体でいられるほうを選ぶ。",
+  t:"心が弾むほうを選んでよい時。理屈で正解を探すより、一緒にいて自然体でいられるかを基準にしてください。出会いや交流が幸運を運びます。"},
+ rev:{k:["移り気","優柔不断","誘惑"],a:"どちらか一方に、決める。",
+  t:"どちらも捨てられずにいると、両方失いかねません。楽なほう・目先の刺激に流されていないか点検を。決める勇気が関係を救います。"}},
+
+{n:7,r:"VII",ja:"戦車",en:"The Chariot",el:"蟹座",
+ art:'<path d="M17 46V34h30v12z"/><circle cx="24" cy="52" r="5"/><circle cx="40" cy="52" r="5"/><path d="M17 34l15-12 15 12"/><circle cx="32" cy="15" r="2.5"/>',
+ up:{k:["勝利","前進","行動力"],a:"勢いのあるうちに、動く。",
+  t:"迷っている時間はもうありません。勢いのあるうちに動けば、障害を突破できます。多少荒削りでもかまわない、スピードそのものが味方です。"},
+ rev:{k:["焦り","空回り","制御不能"],a:"一度停まって、行き先を確認。",
+  t:"アクセルばかり踏んで、ハンドルを握れていない状態。急ぐほど遠回りになります。いったん停まって、行き先と手順を確認しましょう。"}},
+
+{n:8,r:"VIII",ja:"力",en:"Strength",el:"獅子座",
+ art:'<path d="M32 16c-3-5-10-5-10 0s7 5 10 0 10-5 10 0-7 5-10 0z"/><circle cx="32" cy="40" r="12"/><path d="M22 32l-4-7 7 2M42 32l4-7-7 2"/><circle cx="27" cy="38" r="1.2"/><circle cx="37" cy="38" r="1.2"/><path d="M28 46h8"/>',
+ up:{k:["意志","忍耐","克服"],a:"力ずくではなく、粘り強く。",
+  t:"腕力ではなく、粘り強さと優しさで乗り越える場面。恐れているものも、時間をかけて向き合えば必ず手なずけられます。自分を信じ続けてください。"},
+ rev:{k:["無気力","自信喪失","衝動"],a:"まず休む。話はそれから。",
+  t:"気力が底をついているか、感情に飲み込まれているか。どちらも「休む」ことでしか戻りません。できない自分を責めないで、まず体を整えて。"}},
+
+{n:9,r:"IX",ja:"隠者",en:"The Hermit",el:"乙女座",
+ art:'<circle cx="32" cy="12" r="2"/><path d="M32 14v6"/><path d="M25 20h14l4 9-4 9h-14l-4-9z"/><circle cx="32" cy="29" r="3.5"/><path d="M47 16L41 54"/>',
+ up:{k:["探求","内省","思慮"],a:"ひとりで、深く考える時間を。",
+  t:"賑やかさから距離を置き、ひとりで考える時間が答えを連れてきます。急いで結論を出さず、静かに深く掘り下げて。経験ある人の言葉が灯りになります。"},
+ rev:{k:["孤立","頑固","閉鎖"],a:"小さくていいので、扉を開ける。",
+  t:"ひとりでいることが、守りではなく壁になっています。心を閉ざしたままでは情報も助けも届きません。小さくていいので扉を開けて。"}},
+
+{n:10,r:"X",ja:"運命の輪",en:"Wheel of Fortune",el:"木星",
+ art:'<circle cx="32" cy="32" r="19"/><circle cx="32" cy="32" r="7"/><path d="M32 13v6M32 45v6M13 32h6M45 32h6"/><path d="M19.5 19.5l4.3 4.3M40.2 40.2l4.3 4.3M44.5 19.5l-4.3 4.3M23.8 40.2l-4.3 4.3"/>',
+ up:{k:["転機","好機","流れ"],a:"来たと感じたら、掴む。",
+  t:"歯車が回り始めました。思いがけない知らせや出会いが状況を一変させます。チャンスは短いので、来たと感じたらためらわずに掴んでください。"},
+ rev:{k:["停滞","時期尚早","悪循環"],a:"今は待つ。準備をしながら。",
+  t:"今は流れが噛み合わない時期。無理に動かすと消耗するだけです。輪はいずれ回るもの。準備をしながら、時が変わるのを待ちましょう。"}},
+
+{n:11,r:"XI",ja:"正義",en:"Justice",el:"天秤座",
+ art:'<path d="M32 16v36"/><path d="M23 52h18"/><path d="M13 22h38"/><path d="M13 22v4M51 22v4"/><path d="M6 26a7 7 0 0 0 14 0z"/><path d="M44 26a7 7 0 0 0 14 0z"/><circle cx="32" cy="14" r="2.5"/>',
+ up:{k:["公正","均衡","決断"],a:"感情を挟まず、事実で判断。",
+  t:"感情を挟まず、事実に基づいて判断すべき時。やったことは正しく返ってきます。誠実な手続きを踏めば、結果はあなたの側に傾くでしょう。"},
+ rev:{k:["偏り","不公平","先延ばし"],a:"我慢の配分を、数えてみる。",
+  t:"どこかに無理や不均衡があります。片方だけが我慢する関係は続きません。目を背けている問題を、数字や言葉にして並べ直してみて。"}},
+
+{n:12,r:"XII",ja:"吊るされた男",en:"The Hanged Man",el:"海王星",
+ art:'<path d="M14 12h36"/><path d="M20 12v6"/><path d="M32 12v8"/><circle cx="32" cy="24" r="4"/><path d="M32 28v12"/><path d="M26 34h12"/><path d="M32 40l8 6-13 7"/>',
+ up:{k:["忍耐","視点の転換","献身"],a:"動けない時期を、寝かせておく。",
+  t:"今は動けない時期ですが、無駄ではありません。逆さまの景色からしか見えないものがあります。耐えている経験が、のちの財産になります。"},
+ rev:{k:["徒労","犠牲過多","諦め"],a:"手放すのは、負けではない。",
+  t:"報われない努力にしがみついていませんか。頑張る場所が違うだけかもしれません。手放すことは負けではなく、選び直すことです。"}},
+
+{n:13,r:"XIII",ja:"死神",en:"Death",el:"蠍座",
+ art:'<path d="M18 56L42 16"/><path d="M42 16a22 18 0 0 0-24 7"/><path d="M18 23l4 4"/><circle cx="48" cy="46" r="2"/>',
+ up:{k:["終わり","再生","区切り"],a:"終わらせて、余白をつくる。",
+  t:"ひとつの段階が終わります。怖くても、終わらせなければ次は始まりません。過去を丁寧に片づけるほど、新しいものが入る余白が生まれます。"},
+ rev:{k:["未練","停滞","再出発"],a:"ゆっくりでいい、前を向く。",
+  t:"終わったはずのものを、まだ握りしめています。あるいは、ようやく長いトンネルを抜けようとしている段階。ゆっくりでいいので、前を向いて。"}},
+
+{n:14,r:"XIV",ja:"節制",en:"Temperance",el:"射手座",
+ art:'<path d="M13 12h16l-3 12H16z"/><path d="M21 24v7"/><path d="M15 31h12"/><path d="M35 34h16l-3 12H38z"/><path d="M43 46v7"/><path d="M37 53h12"/><path d="M27 20c7 3 5 10 12 14"/>',
+ up:{k:["調和","節度","交流"],a:"ちょうどよい量を、守る。",
+  t:"極端に振れず、ちょうどよい配分を保つことが幸運の鍵。異なるもの同士をうまく混ぜ合わせられる時期です。人との自然なやりとりが道をひらきます。"},
+ rev:{k:["不均衡","浪費","消耗"],a:"注ぎすぎているものを、減らす。",
+  t:"時間・お金・感情のどれかを注ぎすぎています。バランスが崩れると、良い関係も濁ります。配分を意識的に決め直しましょう。"}},
+
+{n:15,r:"XV",ja:"悪魔",en:"The Devil",el:"山羊座",
+ art:'<circle cx="32" cy="32" r="21"/><path d="M32 52l4.7-14.4H51l-11.6-8.9L43.8 14.3 32 23.3l-11.8-9 4.4 14.4L13 37.6h14.3z"/>',
+ up:{k:["執着","束縛","欲望"],a:"依存していると、まず認める。",
+  t:"やめたほうがいいと分かっているのに、離れられないものがあるようです。鎖は自分でかけたもの。まずは「依存している」と認めるところから始まります。"},
+ rev:{k:["解放","脱却","目覚め"],a:"惰性を、ここで断ち切る。",
+  t:"長く縛られていたものから抜け出せる兆し。惰性を断ち切る決断ができます。少し痛みを伴っても、その先の身軽さは本物です。"}},
+
+{n:16,r:"XVI",ja:"塔",en:"The Tower",el:"火星",
+ art:'<path d="M23 56V28h18v28"/><path d="M23 34h18"/><path d="M20 22l12-8 12 8"/><path d="M52 6l-8 12h5l-7 11"/><circle cx="15" cy="40" r="1.6"/><circle cx="17" cy="50" r="1.6"/>',
+ up:{k:["崩壊","衝撃","変化"],a:"守るより、身を軽くする。",
+  t:"積み上げてきた前提が突然崩れるかもしれません。ただし壊れるのは、もともと無理のあった部分。守るより、身を軽くして受け止めるほうが被害は少なくて済みます。"},
+ rev:{k:["予兆","綻び","危機回避"],a:"見て見ぬふりを、やめる。",
+  t:"崩壊は避けられそうですが、ひび割れは残ります。見て見ぬふりをしている不安があるなら、今のうちに手を打って。"}},
+
+{n:17,r:"XVII",ja:"星",en:"The Star",el:"水瓶座",
+ art:'<path d="M32 8l6 15 15 6-15 6-6 15-6-15-15-6 15-6z"/><circle cx="13" cy="13" r="1.8"/><circle cx="51" cy="15" r="1.8"/><path d="M10 56q6-4 11 0t11 0 11 0"/>',
+ up:{k:["希望","理想","癒し"],a:"願いを、具体的に描く。",
+  t:"暗がりの中に、確かな灯りが見えています。願いを具体的に描くほど、それは現実に近づきます。傷ついた心も、静かに回復へ向かうでしょう。"},
+ rev:{k:["失望","迷い","理想過剰"],a:"届く高さまで、段を下げる。",
+  t:"期待が大きすぎて、現実とのずれに疲れています。理想を捨てる必要はありません。届く高さまで、いったん段を下げてみて。"}},
+
+{n:18,r:"XVIII",ja:"月",en:"The Moon",el:"魚座",
+ art:'<path d="M38 10a15 15 0 1 0 0 26 12.5 12.5 0 0 1 0-26z"/><path d="M12 56V38h8v18"/><path d="M12 38l4-6 4 6"/><path d="M44 56V38h8v18"/><path d="M44 38l4-6 4 6"/><path d="M8 58h48"/>',
+ up:{k:["不安","曖昧","潜在意識"],a:"大きな決断は、今はしない。",
+  t:"はっきりしないことが多く、心がざわつく時。見えているものが真実とは限りません。今は大きな決断を避け、夢や直感が知らせるサインに耳を澄ませて。"},
+ rev:{k:["霧が晴れる","真実","回復"],a:"そこから、話し直す。",
+  t:"長く続いた不安が薄れ、隠れていたことが明らかになります。ようやく足元が見えてきました。誤解が解けるなら、そこから話し直しましょう。"}},
+
+{n:19,r:"XIX",ja:"太陽",en:"The Sun",el:"太陽",
+ art:'<circle cx="32" cy="32" r="12"/><path d="M32 8v6M32 50v6M8 32h6M50 32h6M15 15l4.5 4.5M44.5 44.5L49 49M49 15l-4.5 4.5M19.5 44.5L15 49"/>',
+ up:{k:["成功","祝福","生命力"],a:"素直に喜んで、素直に見せる。",
+  t:"隠すものが何もない、まっすぐな喜びの時。素直に喜び、素直に見せることで、周りにも良い流れが広がります。物事は明るいほうへ進みます。"},
+ rev:{k:["空回り","延期","元気不足"],a:"日を浴びて、休む。",
+  t:"うまくいくはずのことが、少し遅れているだけ。無邪気さが独りよがりになっていないか点検を。日を浴びて休めば、力は戻ります。"}},
+
+{n:20,r:"XX",ja:"審判",en:"Judgement",el:"冥王星",
+ art:'<path d="M14 40l24-14v20z"/><path d="M11 36h4"/><path d="M43 26a13 13 0 0 1 0 14"/><path d="M49 21a19 19 0 0 1 0 24"/><path d="M32 54v-6"/>',
+ up:{k:["復活","再会","決断"],a:"呼ばれたら、応える。",
+  t:"過去に終わったはずのものが、形を変えて戻ってきます。これまでの積み重ねが正当に評価される時。呼ばれたと感じたら、応えてください。"},
+ rev:{k:["後悔","見送り","停滞"],a:"取り返せるものは、まだある。",
+  t:"チャンスに気づかないまま、通り過ぎようとしています。あるいは、過去の判断を悔やんで動けずにいる状態。取り返せるものは、まだ残っています。"}},
+
+{n:21,r:"XXI",ja:"世界",en:"The World",el:"土星",
+ art:'<ellipse cx="32" cy="32" rx="15" ry="21"/><ellipse cx="32" cy="32" rx="11" ry="17" opacity=".45"/><circle cx="32" cy="32" r="5"/><circle cx="10" cy="10" r="2"/><circle cx="54" cy="10" r="2"/><circle cx="10" cy="54" r="2"/><circle cx="54" cy="54" r="2"/>',
+ up:{k:["完成","達成","統合"],a:"満ちた今を、味わってから次へ。",
+  t:"ひとつの物語が、望んだ形で完結します。努力は実り、あなたはいるべき場所にたどり着きました。満ち足りた今を味わってから、次の扉へ。"},
+ rev:{k:["未完成","マンネリ","あと一歩"],a:"目的を確認して、もうひと押し。",
+  t:"ゴールは見えているのに、最後の詰めが甘い状態。惰性で続けているなら、目的を確認し直して。もうひと押しで完成します。"}}
+];
+
+const SPREADS = [
+  {id:"one",   name:"ワンオラクル",  desc:"1枚 / 今の導き",     pos:["今のあなたへ"]},
+  {id:"three", name:"スリーカード",  desc:"3枚 / 時の流れ",     pos:["過去","現在","未来"]},
+  {id:"five",  name:"ファイブカード",desc:"5枚 / 深く読む",     pos:["現状","原因","対策","周囲","結末"]},
+  {id:"two",   name:"二者択一",      desc:"5枚 / AかBか",       pos:["現状","Aを選ぶと","Aの結末","Bを選ぶと","Bの結末"]},
+  {id:"celtic",name:"ケルト十字",    desc:"10枚 / 本格",        layout:"celtic",
+   pos:["現状","障害","目標","基盤","過去","近未来","本心","周囲","希望と不安","結末"]},
+  {id:"free",  name:"フリースプレッド",desc:"1〜22枚 / 自由に組む", free:true, pos:["1枚目","2枚目","3枚目"]}
+];
+
+/* ============================================================
+   共通ユーティリティ
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const svgOf = c => '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + c.art + '</svg>';
+
+function hashStr(s){
+  let h = 2166136261;
+  for(let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h,16777619); }
+  return h >>> 0;
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._tm); t._tm = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+/* ---- 保存 ---- */
+const SKEY = "tarot_settings_v2", HKEY = "tarot_history_v2", DKEY = "tarot_daily_v2";
+const store = {
+  get(k, def){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; }catch(e){ return def; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+
+const settings = Object.assign({manual:false, reversed:true, sound:false, reader:false}, store.get(SKEY, {}));
+
+/* ---- 効果音（WebAudio・外部ファイル不要） ---- */
+const Sound = {
+  ctx:null,
+  ready(){
+    if(!settings.sound) return null;
+    if(!this.ctx){ const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return null; this.ctx = new AC(); }
+    if(this.ctx.state === "suspended") this.ctx.resume();
+    return this.ctx;
+  },
+  tone(freq, dur, type, vol){
+    const c = this.ready(); if(!c) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type || "triangle"; o.frequency.setValueAtTime(freq, c.currentTime);
+    o.frequency.exponentialRampToValueAtTime(freq*0.6, c.currentTime + dur);
+    g.gain.setValueAtTime(0.0001, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(vol || 0.12, c.currentTime + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + dur);
+    o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + dur + 0.02);
+  },
+  flip(){ this.tone(760, 0.22, "triangle", 0.10); setTimeout(()=>this.tone(1180, 0.16, "sine", 0.05), 40); },
+  shuffle(){
+    const c = this.ready(); if(!c) return;
+    const len = 0.5, buf = c.createBuffer(1, c.sampleRate*len, c.sampleRate), d = buf.getChannelData(0);
+    for(let i=0;i<d.length;i++){ d[i] = (Math.random()*2-1) * Math.pow(1 - i/d.length, 2.2); }
+    const src = c.createBufferSource(); src.buffer = buf;
+    const f = c.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 2400; f.Q.value = 0.8;
+    const g = c.createGain(); g.gain.value = 0.16;
+    src.connect(f); f.connect(g); g.connect(c.destination); src.start();
+  },
+  done(){ [523.25, 659.25, 783.99, 1046.5].forEach((f,i)=> setTimeout(()=>this.tone(f, 0.9, "sine", 0.07), i*110)); }
+};
+
+/* ============================================================
+   状態
+   ============================================================ */
+let current = SPREADS[1];
+let drawn = [];
+let pickPool = [];
+let gen = 0;          /* 引き直したら古いアニメーションを無効化するための世代番号 */
+let sessionId = 0;    /* 1回の鑑定＝1件の履歴。メモ更新時に同じ行を上書きする */
+let sharedView = false;
+let memoTimer = null;
+
+/* ============================================================
+   ナビゲーション
+   ============================================================ */
+$$(".nav button").forEach(b=>{
+  b.onclick = ()=>{
+    $$(".nav button").forEach(x=>x.classList.toggle("active", x===b));
+    $$(".view").forEach(v=>v.classList.toggle("active", v.id === "view-" + b.dataset.view));
+    if(b.dataset.view === "history") renderHistory();
+    window.scrollTo({top:0, behavior:"smooth"});
+  };
+});
+
+/* ============================================================
+   今日の一枚
+   ============================================================ */
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function renderDaily(){
+  const key = todayKey();
+  const h = hashStr("daily:" + key);
+  const card = DECK[h % DECK.length];
+  const reversed = ((h >>> 9) % 100) < 45;
+  const saved = store.get(DKEY, {});
+  const opened = saved.date === key && saved.open;
+  const m = reversed ? card.rev : card.up;
+
+  $("#daily").innerHTML =
+    '<div class="card' + (opened ? " flipped" : "") + '" id="dailyCard">' +
+      '<div class="inner">' +
+        '<div class="face back"><div class="back-frame"><div class="back-mark">✵</div></div></div>' +
+        '<div class="face front"><div class="front-inner' + (reversed ? " reversed" : "") + '">' +
+          '<div class="numeral">' + card.r + '</div>' +
+          '<div class="art">' + svgOf(card) + '</div>' +
+          '<div class="divider"></div>' +
+          '<div class="cname">' + card.ja + '</div>' +
+        '</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="daily-body">' +
+      '<h3>今日の一枚 ── ' + key.replace(/-/g,".") + '</h3>' +
+      (opened
+        ? '<div class="dname">' + card.r + '　' + card.ja +
+          ' <span style="font-size:12px;letter-spacing:.16em;color:' + (reversed ? "var(--rev)" : "var(--gold)") + '">' +
+          (reversed ? "逆位置" : "正位置") + '</span></div>' +
+          '<p>' + m.t + '</p>'
+        : '<div class="dname">？？？</div><p class="tap">カードをタップすると、今日のメッセージが開きます。<br>（毎日 0 時に変わり、その日のうちは同じカードです）</p>') +
+    '</div>';
+
+  if(!opened){
+    $("#dailyCard").onclick = ()=>{
+      Sound.flip();
+      store.set(DKEY, {date:key, open:true});
+      $("#dailyCard").classList.add("flipped");
+      setTimeout(renderDaily, 900);
+    };
+  }
+}
+
+/* ============================================================
+   スプレッド選択・設定トグル
+   ============================================================ */
+const spreadsEl = $("#spreads");
+SPREADS.forEach(s=>{
+  const b = document.createElement("button");
+  b.className = "spread-btn" + (s.id === current.id ? " active" : "");
+  b.dataset.id = s.id;
+  b.innerHTML = s.name + "<small>" + s.desc + "</small>";
+  b.onclick = ()=>{
+    current = s;
+    [...spreadsEl.children].forEach(c=>c.classList.toggle("active", c.dataset.id === s.id));
+    $("#freeBox").style.display = s.free ? "" : "none";
+  };
+  spreadsEl.appendChild(b);
+});
+
+function bindToggle(id, key, after){
+  const el = $(id);
+  el.classList.toggle("on", !!settings[key]);
+  el.onclick = ()=>{
+    settings[key] = !settings[key];
+    el.classList.toggle("on", settings[key]);
+    store.set(SKEY, settings);
+    if(after) after();
+  };
+}
+bindToggle("#t-manual", "manual");
+bindToggle("#t-rev", "reversed");
+bindToggle("#t-sound", "sound", ()=>{ if(settings.sound) Sound.flip(); });
+bindToggle("#t-reader", "reader", ()=>{ if(drawn.length && drawn.every(d=>d.flipped)) redrawReadings(); });
+
+/* リーダーモードを切り替えたとき、解釈欄だけを出し直す */
+function redrawReadings(){
+  const box = $("#readings"); if(!box) return;
+  box.innerHTML = "";
+  if(settings.reader){ $("#summaryArea").innerHTML = ""; return; }
+  drawn.forEach((d,i)=>{ if(d.flipped) addReading(d, i); });
+  renderSummary();
+}
+
+/* ============================================================
+   カードを引く
+   ============================================================ */
+function pickCards(n){
+  return shuffle(DECK).slice(0, n).map(c=>({
+    card:c,
+    reversed: settings.reversed ? Math.random() < 0.5 : false
+  }));
+}
+
+function startDraw(){
+  if(current.free){
+    let n = parseInt($("#freeN").value, 10);
+    if(isNaN(n) || n < 1) n = 1;
+    if(n > DECK.length) n = DECK.length;
+    $("#freeN").value = n;
+    const raw = $("#freePos").value.trim();
+    const names = raw ? raw.split(/[,、，]/).map(s=>s.trim()).filter(Boolean) : [];
+    current.pos = [];
+    for(let i=0;i<n;i++) current.pos.push(names[i] || (i+1) + "枚目");
+  }
+  sharedView = false;
+  clearHash();
+  $("#draw").textContent = "引き直す";
+  $("#reset").disabled = false;
+  Sound.shuffle();
+  if(settings.manual) renderFan();
+  else { $("#fanArea").innerHTML = ""; dealAuto(); }
+}
+
+function dealAuto(){
+  const picked = pickCards(current.pos.length);
+  drawn = picked.map((p,i)=>({...p, pos:current.pos[i], flipped:false}));
+  renderBoard();
+  setTimeout(()=>$("#stage").scrollIntoView({behavior:"smooth", block:"start"}), 80);
+}
+
+/* ---- 自分で選ぶ（扇） ---- */
+function renderFan(){
+  gen++;
+  drawn = [];
+  $("#stage").innerHTML = "";
+  pickPool = shuffle(DECK);
+  const need = current.pos.length;
+  let chosen = [];
+
+  const wrap = document.createElement("div");
+  wrap.className = "fan-wrap";
+  wrap.innerHTML =
+    '<div class="fan-title">' + current.name + '</div>' +
+    '<div class="fan-note">直感で ' + need + ' 枚えらんでください</div>' +
+    '<div class="fan" id="fan"></div>' +
+    '<div class="fan-count" id="fanCount">0 / ' + need + '</div>';
+  $("#fanArea").innerHTML = "";
+  $("#fanArea").appendChild(wrap);
+
+  const fan = $("#fan");
+  for(let i=0;i<22;i++){
+    const el = document.createElement("div");
+    el.className = "fan-card";
+    el.textContent = "✵";
+    el.onclick = ()=>{
+      if(el.classList.contains("picked")) return;
+      el.classList.add("picked");
+      Sound.flip();
+      chosen.push(pickPool[i]);
+      $("#fanCount").textContent = chosen.length + " / " + need;
+      if(chosen.length === need){
+        drawn = chosen.map((c,k)=>({
+          card:c,
+          reversed: settings.reversed ? Math.random() < 0.5 : false,
+          pos: current.pos[k],
+          flipped:false
+        }));
+        setTimeout(()=>{
+          $("#fanArea").innerHTML = "";
+          renderBoard();
+          $("#stage").scrollIntoView({behavior:"smooth", block:"start"});
+        }, 420);
+      }
+    };
+    fan.appendChild(el);
+  }
+  wrap.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+/* ============================================================
+   盤面の描画
+   ============================================================ */
+function cardHTML(d, i){
+  return '<div class="card" data-i="' + i + '">' +
+    '<div class="inner">' +
+      '<div class="face back"><div class="back-frame"><div class="back-mark">✵</div></div></div>' +
+      '<div class="face front"><div class="front-inner' + (d.reversed ? " reversed" : "") + '">' +
+        '<div class="numeral">' + d.card.r + '</div>' +
+        '<div class="art">' + svgOf(d.card) + '</div>' +
+        '<div class="divider"></div>' +
+        '<div class="cname">' + d.card.ja + '</div>' +
+        '<div class="cen">' + d.card.en + '</div>' +
+      '</div></div>' +
+    '</div></div>';
+}
+function slotHTML(d, i){
+  return '<div class="slot">' +
+    '<div class="pos">' + (d.extra ? "" : (i+1) + ". ") + d.pos + '</div>' + cardHTML(d, i) +
+    '<div class="orient" data-orient="' + i + '"></div></div>';
+}
+
+function renderBoard(){
+  gen++;
+  const q = $("#q").value.trim();
+  const stage = $("#stage");
+  stage.innerHTML = "";
+
+  if(q){
+    const e = document.createElement("p");
+    e.className = "question-echo";
+    e.innerHTML = "占うこと ── <b>" + esc(q) + "</b>";
+    stage.appendChild(e);
+  }
+
+  const bar = document.createElement("div");
+  bar.className = "actions";
+  bar.style.justifyContent = "center";
+  bar.style.marginTop = "6px";
+  bar.innerHTML = '<button class="btn ghost sm" id="flipAll">すべてめくる</button>' +
+                  '<button class="btn ghost sm" id="addCard">もう1枚引く</button>' +
+                  '<button class="btn ghost sm" id="copyBtn">結果をコピー</button>' +
+                  '<button class="btn ghost sm" id="shareBtn">共有リンク</button>';
+  stage.appendChild(bar);
+
+  const hint = document.createElement("p");
+  hint.className = "hint"; hint.id = "hint";
+  hint.textContent = settings.reader
+    ? "カードをタップしてめくってください（リーダーモード：解釈は表示しません）"
+    : "カードをタップしてめくってください";
+  stage.appendChild(hint);
+
+  const board = document.createElement("div");
+  board.className = "board" + (current.layout === "celtic" ? " celtic" : "");
+  board.id = "board";
+  stage.appendChild(board);
+
+  if(current.layout === "celtic") buildCeltic(board);
+  else drawn.forEach((d,i)=> board.insertAdjacentHTML("beforeend", slotHTML(d, i)));
+
+  const sum = document.createElement("div");
+  sum.id = "summaryArea";
+  stage.appendChild(sum);
+
+  const readings = document.createElement("div");
+  readings.className = "readings"; readings.id = "readings";
+  stage.appendChild(readings);
+
+  const memo = document.createElement("div");
+  memo.className = "memo-box";
+  memo.innerHTML = '<label class="cap" for="memo">この鑑定のメモ（履歴に一緒に残ります）</label>' +
+    '<textarea id="memo" rows="3" placeholder="クライアント名、気づいたこと、話した内容など"></textarea>';
+  stage.appendChild(memo);
+
+  sessionId = Date.now();
+  bindBoard();
+  $("#flipAll").onclick = flipAll;
+  $("#addCard").onclick = addCard;
+  $("#copyBtn").onclick = copyResult;
+  $("#shareBtn").onclick = shareLink;
+  $("#memo").addEventListener("input", ()=>{
+    clearTimeout(memoTimer); memoTimer = setTimeout(saveHistory, 600);
+  });
+}
+
+/* 追加されたカードにもクリックを効かせる */
+function bindBoard(){
+  document.querySelectorAll("#board .card").forEach(c=>{
+    if(c.dataset.bound) return;
+    c.dataset.bound = "1";
+    c.addEventListener("click", ()=> flip(+c.dataset.i));
+  });
+}
+
+/* 場に出ていない札から、もう1枚だけ引き足す */
+function addCard(){
+  if(drawn.length >= DECK.length){ toast("22枚すべて場に出ています"); return; }
+  const used = drawn.map(d=>d.card.n);
+  const rest = DECK.filter(c=> used.indexOf(c.n) === -1);
+  const c = rest[Math.floor(Math.random()*rest.length)];
+  const extras = drawn.filter(x=>x.extra).length + 1;
+  const d = {card:c, reversed: settings.reversed ? Math.random() < 0.5 : false,
+             pos:"追加 " + extras, extra:true, flipped:false};
+  drawn.push(d);
+  const i = drawn.length - 1;
+  const board = $("#board");
+  if(current.layout === "celtic"){
+    board.insertAdjacentHTML("beforeend",
+      '<div class="slot" style="grid-row:5;grid-column:' + (((extras - 1) % 4) + 1) + '">' +
+      '<div class="pos">' + d.pos + '</div>' + cardHTML(d, i) +
+      '<div class="orient" data-orient="' + i + '"></div></div>');
+  } else {
+    board.insertAdjacentHTML("beforeend", slotHTML(d, i));
+  }
+  bindBoard();
+  Sound.shuffle();
+  const hint = $("#hint");
+  if(hint) hint.textContent = "── " + d.pos + " を引きました ──";
+}
+
+function buildCeltic(board){
+  const cell = (i, row, col) =>
+    '<div class="slot" style="grid-row:' + row + ';grid-column:' + col + '">' +
+      '<div class="pos">' + (i+1) + '. ' + drawn[i].pos + '</div>' + cardHTML(drawn[i], i) +
+      '<div class="orient" data-orient="' + i + '"></div></div>';
+
+  let html = '<div class="cross" style="grid-row:2;grid-column:2">' +
+      '<div class="pos">1. 現状<br>2. 障害</div>' +
+      '<div class="cross-stack">' + cardHTML(drawn[0], 0) +
+        '<div class="cross-b">' + cardHTML(drawn[1], 1) + '</div>' +
+      '</div>' +
+      '<div class="orient-pair"><div class="orient" data-orient="0" data-label="1. "></div>' +
+      '<div class="orient" data-orient="1" data-label="2. "></div></div>' +
+    '</div>';
+  html += cell(2, 1, 2);   // 目標
+  html += cell(3, 3, 2);   // 基盤
+  html += cell(4, 2, 1);   // 過去
+  html += cell(5, 2, 3);   // 近未来
+  html += cell(9, 1, 4);   // 結末
+  html += cell(8, 2, 4);   // 希望と不安
+  html += cell(7, 3, 4);   // 周囲
+  html += cell(6, 4, 4);   // 本心
+  board.innerHTML = html;
+}
+
+/* ============================================================
+   めくる
+   ============================================================ */
+function flip(i){
+  const d = drawn[i];
+  if(!d || d.flipped) return;
+  d.flipped = true;
+  Sound.flip();
+
+  document.querySelectorAll('.card[data-i="' + i + '"]').forEach(c=>c.classList.add("flipped"));
+  const o = document.querySelector('[data-orient="' + i + '"]');
+  if(o){
+    o.className = "orient " + (d.reversed ? "rev" : "up");
+    o.textContent = (o.dataset.label || "") + (d.reversed ? "逆位置" : "正位置");
+  }
+  const g = gen;
+  setTimeout(()=>{ if(g === gen) addReading(d, i); }, 420);
+
+  if(drawn.every(x=>x.flipped)) setTimeout(()=>{ if(g === gen) finish(); }, 620);
+}
+
+function flipAll(){
+  const g = gen;
+  drawn.forEach((d,i)=>{ if(!d.flipped) setTimeout(()=>{ if(g === gen) flip(i); }, i*260); });
+}
+
+function finish(){
+  const h = $("#hint");
+  if(h) h.textContent = "── すべてのカードが開かれました ──";
+  renderSummary();
+  Sound.done();
+  saveHistory();
+}
+
+function addReading(d, i){
+  if(settings.reader) return;
+  const m = d.reversed ? d.card.rev : d.card.up;
+  const el = document.createElement("div");
+  el.className = "reading" + (d.reversed ? " rev" : "");
+  el.innerHTML =
+    '<div class="r-head">' +
+      '<div class="r-mini">' + svgOf(d.card) + '</div>' +
+      '<span class="r-pos">' + (d.extra ? "" : (i+1) + ". ") + d.pos + '</span>' +
+      '<span class="r-name">' + d.card.r + '　' + d.card.ja + '</span>' +
+      '<span class="r-orient" style="color:' + (d.reversed ? "var(--rev)" : "var(--gold)") + '">' +
+        (d.reversed ? "逆位置" : "正位置") + '</span>' +
+    '</div>' +
+    '<div class="r-keys">' + m.k.map(k=>'<span class="key">' + k + '</span>').join("") + '</div>' +
+    '<p class="r-text">' + m.t + '</p>' +
+    '<p class="r-adv"><b>ADVICE</b>' + m.a + '</p>';
+  const box = $("#readings");
+  if(!box) return;
+  const list = [...box.children];
+  const idx = list.findIndex(c => +c.dataset.i > i);
+  el.dataset.i = i;
+  if(idx === -1) box.appendChild(el); else box.insertBefore(el, list[idx]);
+}
+
+/* ============================================================
+   総合リーディング
+   ============================================================ */
+function renderSummary(){
+  if(settings.reader){ const s = $("#summaryArea"); if(s) s.innerHTML = ""; return; }
+  const total = drawn.length;
+  const revN = drawn.filter(d=>d.reversed).length;
+  const upN = total - revN;
+  const avg = drawn.reduce((s,d)=>s+d.card.n, 0) / total;
+  const nums = drawn.map(d=>d.card.n);
+  const has = n => nums.includes(n);
+
+  let p1;
+  if(total === 1){
+    p1 = drawn[0].reversed
+      ? "引かれた一枚は逆位置。今は勢いよりも、立ち止まって整えることが求められています。"
+      : "引かれた一枚は正位置。素直に受け取って、そのまま進んで大丈夫です。";
+  } else if(revN === 0){
+    p1 = "すべて正位置。流れは完全にあなたの側にあります。迷いを挟まず、思った通りに進めてよい配置です。";
+  } else if(upN === 0){
+    p1 = "すべて逆位置。今は外へ働きかける時期ではなく、内側を整える時期。焦って動かすほど絡まります。休むことも立派な一手です。";
+  } else if(revN / total >= 0.6){
+    p1 = "逆位置が" + revN + "枚と多め。進めたい気持ちと、現実の準備とがまだ噛み合っていません。ひとつずつ引っかかりを外していきましょう。";
+  } else if(revN / total <= 0.4){
+    p1 = "正位置が" + upN + "枚と優勢。全体としては良い流れです。逆位置の箇所だけ、丁寧に手当てすれば十分でしょう。";
+  } else {
+    p1 = "正位置と逆位置が拮抗しています。良いことも面倒なことも半々——それはつまり、あなたの選び方しだいで転ぶ方向が決まるということ。";
+  }
+
+  let p2;
+  if(avg < 7) p2 = "全体の重心は大アルカナの前半にあります。物語はまだ始まったばかり。結論を急がず、種をまく段階だと考えてください。";
+  else if(avg < 14.5) p2 = "全体の重心は大アルカナの中盤。試練と転換の只中にいます。ここで踏ん張れるかどうかが、後の景色を大きく変えます。";
+  else p2 = "全体の重心は大アルカナの後半。ひとつの流れが仕上げに向かっています。あと少し、丁寧に締めくくることに力を注いで。";
+
+  let p3 = "";
+  const heavy = [13,15,16,18].filter(has);
+  const bright = [17,19,21,10].filter(has);
+  if(heavy.length && bright.length){
+    p3 = "揺らぎのカードと祝福のカードが同時に出ています。壊れるものと生まれるものが隣り合う時期。失うことを恐れすぎないでください。";
+  } else if(heavy.length >= 2){
+    p3 = "重たいカードが複数。無理のある部分に負荷がかかっています。守りを固めるより、いらないものを手放すほうが軽くなります。";
+  } else if(heavy.length === 1){
+    const c = DECK[heavy[0]];
+    p3 = "「" + c.ja + "」が混じっています。避けたい出来事に見えても、これは行き止まりではなく方向転換の合図です。";
+  } else if(bright.length >= 2){
+    p3 = "明るいカードが複数そろいました。願いが形になりやすい時期です。動くなら今、遠慮はいりません。";
+  } else if(bright.length === 1){
+    const c = DECK[bright[0]];
+    p3 = "「" + c.ja + "」が味方についています。ここがこの配置のいちばんの支えになります。";
+  }
+
+  const keys = [];
+  drawn.forEach(d=>{ const m = d.reversed ? d.card.rev : d.card.up; keys.push(m.k[0]); });
+
+  $("#summaryArea").innerHTML =
+    '<div class="summary">' +
+      '<h3>総 合 リ ー デ ィ ン グ</h3>' +
+      '<div class="meter">' +
+        '<span class="chip">正位置 <b>' + upN + '</b></span>' +
+        '<span class="chip">逆位置 <b>' + revN + '</b></span>' +
+        '<span class="chip">重心 <b>' + avg.toFixed(1) + '</b> / 21</span>' +
+        '<span class="chip">キーワード <b>' + keys.slice(0,4).join("・") + '</b></span>' +
+      '</div>' +
+      '<p>' + p1 + '</p><p>' + p2 + '</p>' + (p3 ? '<p>' + p3 + '</p>' : '') +
+    '</div>';
+}
+
+/* ============================================================
+   結果のコピー
+   ============================================================ */
+function resultText(){
+  const q = $("#q").value.trim();
+  const now = new Date();
+  const stamp = now.getFullYear() + "/" + (now.getMonth()+1) + "/" + now.getDate() + " " +
+    String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
+  let t = "【タロット占い】" + stamp + "\n" + "スプレッド：" + current.name + "\n";
+  if(q) t += "占うこと：" + q + "\n";
+  t += "────────────\n";
+  drawn.forEach((d,i)=>{
+    const m = d.reversed ? d.card.rev : d.card.up;
+    t += (i+1) + ". " + d.pos + "：" + d.card.r + " " + d.card.ja +
+         "（" + (d.reversed ? "逆位置" : "正位置") + "）\n   " + m.k.join("・") + "\n   " + m.t + "\n";
+  });
+  const memoEl = $("#memo");
+  if(memoEl && memoEl.value.trim()) t += "────────────\nメモ：" + memoEl.value.trim() + "\n";
+  return t;
+}
+function copyResult(){
+  if(!drawn.length) return;
+  copyText(resultText(), "結果をコピーしました");
+}
+function copyText(txt, msg){
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(()=>toast(msg), ()=>fallbackCopy(txt, msg));
+  } else fallbackCopy(txt, msg);
+}
+function fallbackCopy(txt, msg){
+  const ta = document.createElement("textarea");
+  ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast(msg); }
+  catch(e){ toast("コピーできませんでした"); }
+  document.body.removeChild(ta);
+}
+
+/* ============================================================
+   共有リンク（引いた結果をURLに畳んで渡す）
+   ============================================================ */
+function b64e(s){
+  return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function b64d(s){
+  s = s.replace(/-/g,"+").replace(/_/g,"/");
+  return decodeURIComponent(escape(atob(s)));
+}
+function baseUrl(){ return location.href.split("#")[0]; }
+function clearHash(){
+  if(!location.hash) return;
+  try{ history.replaceState(null, "", baseUrl()); }catch(e){ location.hash = ""; }
+}
+function shareLink(){
+  if(!drawn.length) return;
+  const o = {
+    s: current.name, l: current.layout || "",
+    p: drawn.map(d=>d.pos), c: drawn.map(d=>d.card.n),
+    r: drawn.map(d=>d.reversed ? 1 : 0), q: $("#q").value.trim()
+  };
+  copyText(baseUrl() + "#r=" + b64e(JSON.stringify(o)), "共有リンクをコピーしました");
+}
+function loadShared(){
+  const m = location.hash.match(/^#r=(.+)$/);
+  if(!m) return false;
+  try{
+    const o = JSON.parse(b64d(m[1]));
+    if(!o.c || !o.c.length) return false;
+    current = {id:"shared", name:o.s || "共有された配置", pos:o.p, layout:o.l || undefined};
+    drawn = o.c.map((n,i)=>({card:DECK[n], reversed:!!(o.r && o.r[i]), pos:(o.p && o.p[i]) || (i+1) + "枚目", flipped:false}));
+    sharedView = true;
+    $("#q").value = o.q || "";
+    $("#draw").textContent = "自分で引き直す";
+    $("#reset").disabled = false;
+    renderBoard();
+    const banner = document.createElement("div");
+    banner.className = "banner";
+    banner.innerHTML = "共有されたリンクから開いています。<br>下のカードは、その人が引いたときのままの配置です。";
+    $("#stage").insertBefore(banner, $("#stage").firstChild);
+    drawn.forEach((d,i)=>flip(i));
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ============================================================
+   履歴
+   ============================================================ */
+function saveHistory(){
+  if(sharedView || !drawn.length) return;
+  const memoEl = $("#memo");
+  const list = store.get(HKEY, []);
+  const rec = {
+    id: sessionId,
+    ts: Date.now(),
+    spread: current.name,
+    q: $("#q").value.trim(),
+    memo: memoEl ? memoEl.value.trim() : "",
+    cards: drawn.map(d=>({n:d.card.n, rev:d.reversed, pos:d.pos}))
+  };
+  const at = list.findIndex(x=>x.id === sessionId);
+  if(at >= 0){ rec.ts = list[at].ts; list[at] = rec; }
+  else list.unshift(rec);
+  store.set(HKEY, list.slice(0, 50));
+}
+function renderHistory(){
+  const list = store.get(HKEY, []);
+  const box = $("#hist");
+  if(!list.length){
+    box.innerHTML = '<p class="empty">まだ履歴がありません。<br>占いを終えると、ここに自動で残ります。</p>';
+    return;
+  }
+  box.innerHTML = list.map((h,idx)=>{
+    const d = new Date(h.ts);
+    const when = (d.getMonth()+1) + "/" + d.getDate() + " " +
+      String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+    const cards = h.cards.map(c=>{
+      const card = DECK[c.n];
+      return '<span style="color:' + (c.rev ? "var(--rev)" : "var(--gold-soft)") + '">' +
+             card.ja + (c.rev ? "(逆)" : "") + '</span>';
+    }).join(" ／ ");
+    return '<div class="hrow">' +
+      '<div class="when">' + when + '</div>' +
+      '<div class="what"><div class="sp">' + h.spread + '</div>' +
+        '<div class="cards">' + cards + '</div>' +
+        (h.q ? '<div class="q">「' + esc(h.q) + '」</div>' : '') +
+        (h.memo ? '<div class="memo-line">✎ ' + esc(h.memo) + '</div>' : '') + '</div>' +
+      '<button class="btn ghost sm" data-del="' + idx + '">削除</button></div>';
+  }).join("");
+  box.querySelectorAll("[data-del]").forEach(b=>{
+    b.onclick = ()=>{
+      const l = store.get(HKEY, []); l.splice(+b.dataset.del, 1); store.set(HKEY, l);
+      renderHistory(); toast("削除しました");
+    };
+  });
+}
+$("#clearHist").onclick = ()=>{
+  if(!store.get(HKEY, []).length){ toast("履歴はありません"); return; }
+  store.set(HKEY, []); renderHistory(); toast("履歴を削除しました");
+};
+
+/* ============================================================
+   カード図鑑
+   ============================================================ */
+function renderCodex(){
+  $("#codex").innerHTML = DECK.map(c=>
+    '<div class="cx" data-n="' + c.n + '">' +
+      '<div class="art">' + svgOf(c) + '</div>' +
+      '<div class="n">' + c.r + '</div>' +
+      '<div class="j">' + c.ja + '</div>' +
+      '<div class="e">' + c.en + '</div>' +
+    '</div>').join("");
+  $$(".cx").forEach(el=> el.onclick = ()=> openCard(DECK[+el.dataset.n]));
+}
+function openCard(c){
+  $("#modalBox").innerHTML =
+    '<button class="modal-close" id="mClose">×</button>' +
+    '<div class="m-art">' + svgOf(c) + '</div>' +
+    '<div class="m-title"><div class="n">' + c.r + '</div>' +
+      '<div class="j">' + c.ja + '</div><div class="e">' + c.en + '</div></div>' +
+    '<div class="m-el">対応：' + c.el + '</div>' +
+    '<div class="m-sec up"><h4>正 位 置</h4>' +
+      '<div class="r-keys">' + c.up.k.map(k=>'<span class="key">' + k + '</span>').join("") + '</div>' +
+      '<p>' + c.up.t + '</p><p class="r-adv"><b>ADVICE</b>' + c.up.a + '</p></div>' +
+    '<div class="m-sec rev"><h4>逆 位 置</h4>' +
+      '<div class="r-keys">' + c.rev.k.map(k=>'<span class="key">' + k + '</span>').join("") + '</div>' +
+      '<p>' + c.rev.t + '</p><p class="r-adv"><b>ADVICE</b>' + c.rev.a + '</p></div>';
+  $("#modal").classList.add("open");
+  $("#mClose").onclick = closeModal;
+}
+function closeModal(){ $("#modal").classList.remove("open"); }
+$("#modal").querySelector(".modal-bg").onclick = closeModal;
+document.addEventListener("keydown", e=>{ if(e.key === "Escape") closeModal(); });
+
+/* ============================================================
+   初期化
+   ============================================================ */
+$("#draw").onclick = startDraw;
+$("#q").addEventListener("keydown", e=>{ if(e.key === "Enter") startDraw(); });
+$("#reset").onclick = ()=>{
+  gen++; drawn = []; sharedView = false; clearHash();
+  $("#stage").innerHTML = ""; $("#fanArea").innerHTML = "";
+  $("#q").value = ""; $("#draw").textContent = "カードを引く"; $("#reset").disabled = true;
+  window.scrollTo({top:0, behavior:"smooth"});
+};
+
+renderDaily();
+renderCodex();
+if(settings.reader) $("#t-reader").classList.add("on");
+loadShared();
+window.addEventListener("hashchange", ()=>{ if(location.hash.indexOf("#r=") === 0) loadShared(); });
+</script>
+</body>
+</html>
