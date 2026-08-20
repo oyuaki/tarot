@@ -3,15 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ポケット・アルカナ</title>
-<meta name="description" content="カードが手元にない日のための、大アルカナ22枚。登録不要・ブラウザだけで引けるタロット。ワンオラクル、スリーカード、ケルト十字、枚数自由のフリースプレッドに対応。解釈を出さないリーダーモード付き。">
+<title>タロットシミュレーター｜カードがない日に、ブラウザで引く</title>
+<meta name="description" content="デッキが手元にない時のためのタロットシミュレーター。大アルカナ22枚を登録不要・ブラウザだけでシャッフルして引けます。ワンオラクル、スリーカード、ケルト十字、枚数自由のフリースプレッドに対応。">
 <meta name="theme-color" content="#0d0b1a">
 <meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://oyuaki.github.io/tarot/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ポケット・アルカナ">
-<meta property="og:description" content="カードが手元にない日のための、大アルカナ22枚。">
+<meta property="og:title" content="タロットシミュレーター｜カードがない日に、ブラウザで引く">
+<meta property="og:description" content="デッキが手元にない時のための、大アルカナ22枚。登録不要・ブラウザだけで引けます。">
+<meta property="og:url" content="https://oyuaki.github.io/tarot/">
+<meta property="og:image" content="https://oyuaki.github.io/tarot/ogp.png">
+<meta property="og:site_name" content="タロットシミュレーター">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="ポケット・アルカナ">
+<meta name="apple-mobile-web-app-title" content="タロット">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23161034'/%3E%3Cpath d='M32 10l6 15 15 6-15 6-6 15-6-15-15-6 15-6z' fill='none' stroke='%23d4b25f' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
@@ -49,8 +54,10 @@
   .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:42px 20px 90px;}
 
   header{text-align:center;margin-bottom:26px;}
-  h1{margin:0 0 10px;font-size:clamp(26px,5vw,40px);letter-spacing:.24em;font-weight:400;
+  h1{margin:0 0 8px;font-size:clamp(22px,4.4vw,34px);letter-spacing:.14em;font-weight:400;
      color:var(--gold);text-shadow:0 0 26px rgba(212,178,95,.35);}
+  .sub{margin:0;font-size:clamp(9px,1.8vw,11px);letter-spacing:.42em;text-indent:.42em;
+       color:var(--gold-dim);text-transform:uppercase;}
   .rule{width:220px;height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
 
   .panel{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:22px;}
@@ -126,11 +133,12 @@
   /* ---- celtic cross ---- */
   .board.celtic{--cw:112px;--ch:185px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
     gap:24px 10px;justify-items:center;align-items:start;max-width:660px;margin:0 auto;}
-  .board.celtic .slot{width:var(--cw);}
   .board.celtic .pos{font-size:9.5px;letter-spacing:.06em;line-height:1.5;height:30px;overflow:hidden;}
   .board.celtic .cname{font-size:11px;line-height:1.35;}
-  .board.celtic .cen{display:none;}
-  .board.celtic .art{width:56%;}
+  .board.celtic .cen{font-size:7px;letter-spacing:.05em;line-height:1.35;white-space:normal;}
+  .board.celtic .art{width:50%;}
+  .board.celtic .front-inner{gap:2px;padding:6px 3px;}
+  .board.celtic .divider{width:32px;margin:2px 0;}
   .board.celtic .numeral{font-size:10px;}
   .board.celtic .orient{font-size:10px;letter-spacing:.1em;}
   .cross{width:var(--cw);grid-row:2;grid-column:2;}
@@ -139,7 +147,7 @@
   /* 横向きのカードは少し下げて重ね、下の札の絵柄が見えるようにする */
   .cross-b{position:absolute;top:0;left:0;width:var(--cw);height:var(--ch);
     transform:translateY(22px) rotate(90deg);z-index:4;
-    filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));transition:transform .25s;}
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));}
   /* タップされた側を前面へ */
   .cross-stack .card.raised{z-index:9;}
   .cross-stack .card.raised .face{box-shadow:0 16px 32px rgba(0,0,0,.75);}
@@ -200,6 +208,10 @@
     padding:15px 18px;margin-bottom:22px;text-align:center;font-size:13.5px;color:var(--gold-soft);
     letter-spacing:.08em;line-height:1.9;}
   footer{margin-top:64px;text-align:center;color:var(--muted);font-size:11px;letter-spacing:.16em;line-height:2;}
+  .about{max-width:620px;margin:0 auto 26px;text-align:left;font-size:12px;
+         letter-spacing:.04em;line-height:2.1;opacity:.72;}
+  .about p{margin:0 0 12px;}
+  .about p:last-child{margin-bottom:0;}
 
   @media(max-width:560px){
     :root{--cw:132px;--ch:218px;}
@@ -207,6 +219,8 @@
     .board.celtic{--cw:80px;--ch:132px;gap:14px 5px;}
     .board.celtic .cname{font-size:8.5px;}
     .board.celtic .numeral{font-size:8px;}
+    .board.celtic .cen{font-size:5.8px;letter-spacing:.02em;}
+    .board.celtic .art{width:46%;}
     .board.celtic .pos{font-size:8.5px;letter-spacing:.06em;}
     .wrap{padding:32px 14px 70px;}
     .panel{padding:18px;}
@@ -216,7 +230,8 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>POCKET ARCANA</h1>
+    <h1>タロットシミュレーター</h1>
+    <p class="sub">Pocket Arcana</p>
     <div class="rule"></div>
   </header>
 
@@ -243,7 +258,13 @@
 
   <div class="stage" id="stage"></div>
 
-  <footer>Major Arcana 0 – XXI</footer>
+  <footer>
+    <div class="about">
+      <p>デッキが手元にない時のためのタロットシミュレーターです。旅先で、職場の休憩時間に、あるいはデッキを買う前の練習に。大アルカナ22枚を毎回シャッフルして引きます。登録もインストールも不要で、ブラウザだけで動きます。</p>
+      <p>スプレッドはワンオラクル、スリーカード、ケルト十字、そして枚数とポジション名を自由に決められるフリースプレッドに対応しています。正位置・逆位置もそのつど決まります。</p>
+    </div>
+    <p>Major Arcana 0 – XXI</p>
+  </footer>
 </div>
 
 <script>
@@ -251,154 +272,154 @@
    大アルカナ 22枚
    ============================================================ */
 const DECK = [
-{n:0,r:"0",ja:"愚者",en:"The Fool",el:"天王星",
+{n:0,r:"0",ja:"愚者",en:"The Fool",
  art:'<circle cx="24" cy="16" r="4"/><path d="M24 20v14"/><path d="M17 28l14-5"/><path d="M24 34l-5 12M24 34l6 11"/><path d="M31 23l3-8"/><path d="M8 50h34v8"/><circle cx="47" cy="14" r="2.4"/>',
  up:{k:["自由","無邪気","出発"],a:"損得より、心が動くほうへ。",
   t:"まだ何も決まっていないからこそ、どこへでも行ける時。常識や損得をいったん脇に置いて、心が惹かれるほうへ一歩踏み出してください。無計画に見えても、その軽やかさが今のあなたの武器です。"},
  rev:{k:["軽率","無責任","現実逃避"],a:"動く前に、足元をひと目見て。",
   t:"自由と気まぐれを取り違えているのかもしれません。思いつきで動く前に、足元と約束事を確認して。逃げ出したい気持ちの正体を見つめると、進む道が定まります。"}},
 
-{n:1,r:"I",ja:"魔術師",en:"The Magician",el:"水星",
+{n:1,r:"I",ja:"魔術師",en:"The Magician",
  art:'<path d="M32 8v18"/><path d="M32 42c-4-6-12-6-12 0s8 6 12 0 12-6 12 0-8 6-12 0z"/><path d="M12 54h40"/><path d="M26 26h12"/>',
  up:{k:["創造","才能","始まり"],a:"最初の一手を、今日打つ。",
   t:"必要な道具はすでに手の中にあります。あとはそれを使うと決めるだけ。あなたの言葉と行動には、今、ものごとを動かす力が宿っています。最初の一手を惜しまないで。"},
  rev:{k:["準備不足","口先だけ","停滞"],a:"始める前に、腕を磨く時間を。",
   t:"意欲はあるのに、空回りしている気配。技術や情報が足りないなら、始める前に整えるほうが早道です。うまい話には裏がないか確かめて。"}},
 
-{n:2,r:"II",ja:"女教皇",en:"The High Priestess",el:"月",
+{n:2,r:"II",ja:"女教皇",en:"The High Priestess",
  art:'<path d="M14 12v42M50 12v42"/><path d="M14 20h36"/><path d="M38 46a9 9 0 1 1-6-15 7 7 0 0 0 6 15z"/>',
  up:{k:["直感","知性","静けさ"],a:"静かな場所で、自分に訊く。",
   t:"騒がしい意見よりも、自分の内側の静かな声が正しい時。感情的に動かず、事実と直感の両方を落ち着いて見つめてください。答えはもう分かっているはずです。"},
  rev:{k:["神経質","思い込み","感情的"],a:"ひとりで抱えず、言葉にする。",
   t:"考えすぎて、事実と不安の区別がつかなくなっています。潔癖に正しさを求めるほど息苦しくなるもの。誰かに素直に打ち明けると、視界がひらけます。"}},
 
-{n:3,r:"III",ja:"女帝",en:"The Empress",el:"金星",
+{n:3,r:"III",ja:"女帝",en:"The Empress",
  art:'<path d="M18 28l4-11 10 7 10-7 4 11z"/><path d="M18 28h28"/><path d="M32 54c-9-6-13-11-13-16a6.5 6.5 0 0 1 13-2 6.5 6.5 0 0 1 13 2c0 5-4 10-13 16z"/>',
  up:{k:["豊かさ","愛情","実り"],a:"惜しまず与えると、返ってくる。",
   t:"与えることが、そのまま自分の実りになる時期。人にも自分にも惜しまず手をかけてください。心地よさや美しさを大事にするほど、物事は育っていきます。"},
  rev:{k:["浪費","依存","怠惰"],a:"いったん、手を離してみる。",
   t:"甘やかしと優しさの境目が曖昧になっているようです。与えすぎ、使いすぎ、寄りかかりすぎ——どれかに心当たりがあるなら、いったん手を離してみて。"}},
 
-{n:4,r:"IV",ja:"皇帝",en:"The Emperor",el:"牡羊座",
+{n:4,r:"IV",ja:"皇帝",en:"The Emperor",
  art:'<path d="M20 18l3-9 9 6 9-6 3 9z"/><path d="M20 18h24"/><path d="M18 54V30h28v24"/><path d="M18 42h28"/>',
  up:{k:["責任","統率","安定"],a:"自分で決めて、自分で引き受ける。",
   t:"自分の領域を自分で治める覚悟が問われています。ルールを決め、判断を引き受けるほど状況は安定します。頼れる年上の存在が力を貸してくれることも。"},
  rev:{k:["独善","傲慢","未熟"],a:"引き受ける範囲を、決め直す。",
   t:"力の使い方が乱暴になっていませんか。押し通すほど反発を招きます。逆に、責任から逃げている場合も。どちらにせよ「引き受ける範囲」を決め直す時です。"}},
 
-{n:5,r:"V",ja:"教皇",en:"The Hierophant",el:"牡牛座",
+{n:5,r:"V",ja:"教皇",en:"The Hierophant",
  art:'<path d="M32 10v44"/><path d="M27 20h10"/><path d="M24 30h16"/><path d="M21 40h22"/><path d="M14 26v28M50 26v28"/>',
  up:{k:["信頼","導き","誠実"],a:"経験のある人に、素直に訊く。",
   t:"信頼できる人に相談することで道がひらけます。奇策より、正攻法と誠実さが評価される場面。学ぶ姿勢を持てば、良き師や仲間に恵まれるでしょう。"},
  rev:{k:["束縛","不信","建前"],a:"ありがた迷惑は、丁寧に断る。",
   t:"しきたりや周囲の期待に縛られて、本音が言えなくなっています。ありがた迷惑な助言は、丁寧に断ってかまいません。自分の基準を持ち直して。"}},
 
-{n:6,r:"VI",ja:"恋人",en:"The Lovers",el:"双子座",
+{n:6,r:"VI",ja:"恋人",en:"The Lovers",
  art:'<circle cx="24" cy="40" r="11"/><circle cx="40" cy="40" r="11"/><circle cx="32" cy="14" r="5"/><path d="M32 5v3M32 20v3M22 14h3M39 14h3"/>',
  up:{k:["恋愛","選択","調和"],a:"自然体でいられるほうを選ぶ。",
   t:"心が弾むほうを選んでよい時。理屈で正解を探すより、一緒にいて自然体でいられるかを基準にしてください。出会いや交流が幸運を運びます。"},
  rev:{k:["移り気","優柔不断","誘惑"],a:"どちらか一方に、決める。",
   t:"どちらも捨てられずにいると、両方失いかねません。楽なほう・目先の刺激に流されていないか点検を。決める勇気が関係を救います。"}},
 
-{n:7,r:"VII",ja:"戦車",en:"The Chariot",el:"蟹座",
+{n:7,r:"VII",ja:"戦車",en:"The Chariot",
  art:'<path d="M17 46V34h30v12z"/><circle cx="24" cy="52" r="5"/><circle cx="40" cy="52" r="5"/><path d="M17 34l15-12 15 12"/><circle cx="32" cy="15" r="2.5"/>',
  up:{k:["勝利","前進","行動力"],a:"勢いのあるうちに、動く。",
   t:"迷っている時間はもうありません。勢いのあるうちに動けば、障害を突破できます。多少荒削りでもかまわない、スピードそのものが味方です。"},
  rev:{k:["焦り","空回り","制御不能"],a:"一度停まって、行き先を確認。",
   t:"アクセルばかり踏んで、ハンドルを握れていない状態。急ぐほど遠回りになります。いったん停まって、行き先と手順を確認しましょう。"}},
 
-{n:8,r:"VIII",ja:"力",en:"Strength",el:"獅子座",
+{n:8,r:"VIII",ja:"力",en:"Strength",
  art:'<path d="M32 16c-3-5-10-5-10 0s7 5 10 0 10-5 10 0-7 5-10 0z"/><circle cx="32" cy="40" r="12"/><path d="M22 32l-4-7 7 2M42 32l4-7-7 2"/><circle cx="27" cy="38" r="1.2"/><circle cx="37" cy="38" r="1.2"/><path d="M28 46h8"/>',
  up:{k:["意志","忍耐","克服"],a:"力ずくではなく、粘り強く。",
   t:"腕力ではなく、粘り強さと優しさで乗り越える場面。恐れているものも、時間をかけて向き合えば必ず手なずけられます。自分を信じ続けてください。"},
  rev:{k:["無気力","自信喪失","衝動"],a:"まず休む。話はそれから。",
   t:"気力が底をついているか、感情に飲み込まれているか。どちらも「休む」ことでしか戻りません。できない自分を責めないで、まず体を整えて。"}},
 
-{n:9,r:"IX",ja:"隠者",en:"The Hermit",el:"乙女座",
+{n:9,r:"IX",ja:"隠者",en:"The Hermit",
  art:'<circle cx="32" cy="12" r="2"/><path d="M32 14v6"/><path d="M25 20h14l4 9-4 9h-14l-4-9z"/><circle cx="32" cy="29" r="3.5"/><path d="M47 16L41 54"/>',
  up:{k:["探求","内省","思慮"],a:"ひとりで、深く考える時間を。",
   t:"賑やかさから距離を置き、ひとりで考える時間が答えを連れてきます。急いで結論を出さず、静かに深く掘り下げて。経験ある人の言葉が灯りになります。"},
  rev:{k:["孤立","頑固","閉鎖"],a:"小さくていいので、扉を開ける。",
   t:"ひとりでいることが、守りではなく壁になっています。心を閉ざしたままでは情報も助けも届きません。小さくていいので扉を開けて。"}},
 
-{n:10,r:"X",ja:"運命の輪",en:"Wheel of Fortune",el:"木星",
+{n:10,r:"X",ja:"運命の輪",en:"Wheel of Fortune",
  art:'<circle cx="32" cy="32" r="19"/><circle cx="32" cy="32" r="7"/><path d="M32 13v6M32 45v6M13 32h6M45 32h6"/><path d="M19.5 19.5l4.3 4.3M40.2 40.2l4.3 4.3M44.5 19.5l-4.3 4.3M23.8 40.2l-4.3 4.3"/>',
  up:{k:["転機","好機","流れ"],a:"来たと感じたら、掴む。",
   t:"歯車が回り始めました。思いがけない知らせや出会いが状況を一変させます。チャンスは短いので、来たと感じたらためらわずに掴んでください。"},
  rev:{k:["停滞","時期尚早","悪循環"],a:"今は待つ。準備をしながら。",
   t:"今は流れが噛み合わない時期。無理に動かすと消耗するだけです。輪はいずれ回るもの。準備をしながら、時が変わるのを待ちましょう。"}},
 
-{n:11,r:"XI",ja:"正義",en:"Justice",el:"天秤座",
+{n:11,r:"XI",ja:"正義",en:"Justice",
  art:'<path d="M32 16v36"/><path d="M23 52h18"/><path d="M13 22h38"/><path d="M13 22v4M51 22v4"/><path d="M6 26a7 7 0 0 0 14 0z"/><path d="M44 26a7 7 0 0 0 14 0z"/><circle cx="32" cy="14" r="2.5"/>',
  up:{k:["公正","均衡","決断"],a:"感情を挟まず、事実で判断。",
   t:"感情を挟まず、事実に基づいて判断すべき時。やったことは正しく返ってきます。誠実な手続きを踏めば、結果はあなたの側に傾くでしょう。"},
  rev:{k:["偏り","不公平","先延ばし"],a:"我慢の配分を、数えてみる。",
   t:"どこかに無理や不均衡があります。片方だけが我慢する関係は続きません。目を背けている問題を、数字や言葉にして並べ直してみて。"}},
 
-{n:12,r:"XII",ja:"吊るされた男",en:"The Hanged Man",el:"海王星",
+{n:12,r:"XII",ja:"吊るされた男",en:"The Hanged Man",
  art:'<path d="M14 12h36"/><path d="M20 12v6"/><path d="M32 12v8"/><circle cx="32" cy="24" r="4"/><path d="M32 28v12"/><path d="M26 34h12"/><path d="M32 40l8 6-13 7"/>',
  up:{k:["忍耐","視点の転換","献身"],a:"動けない時期を、寝かせておく。",
   t:"今は動けない時期ですが、無駄ではありません。逆さまの景色からしか見えないものがあります。耐えている経験が、のちの財産になります。"},
  rev:{k:["徒労","犠牲過多","諦め"],a:"手放すのは、負けではない。",
   t:"報われない努力にしがみついていませんか。頑張る場所が違うだけかもしれません。手放すことは負けではなく、選び直すことです。"}},
 
-{n:13,r:"XIII",ja:"死神",en:"Death",el:"蠍座",
+{n:13,r:"XIII",ja:"死神",en:"Death",
  art:'<path d="M18 56L42 16"/><path d="M42 16a22 18 0 0 0-24 7"/><path d="M18 23l4 4"/><circle cx="48" cy="46" r="2"/>',
  up:{k:["終わり","再生","区切り"],a:"終わらせて、余白をつくる。",
   t:"ひとつの段階が終わります。怖くても、終わらせなければ次は始まりません。過去を丁寧に片づけるほど、新しいものが入る余白が生まれます。"},
  rev:{k:["未練","停滞","再出発"],a:"ゆっくりでいい、前を向く。",
   t:"終わったはずのものを、まだ握りしめています。あるいは、ようやく長いトンネルを抜けようとしている段階。ゆっくりでいいので、前を向いて。"}},
 
-{n:14,r:"XIV",ja:"節制",en:"Temperance",el:"射手座",
+{n:14,r:"XIV",ja:"節制",en:"Temperance",
  art:'<path d="M13 12h16l-3 12H16z"/><path d="M21 24v7"/><path d="M15 31h12"/><path d="M35 34h16l-3 12H38z"/><path d="M43 46v7"/><path d="M37 53h12"/><path d="M27 20c7 3 5 10 12 14"/>',
  up:{k:["調和","節度","交流"],a:"ちょうどよい量を、守る。",
   t:"極端に振れず、ちょうどよい配分を保つことが幸運の鍵。異なるもの同士をうまく混ぜ合わせられる時期です。人との自然なやりとりが道をひらきます。"},
  rev:{k:["不均衡","浪費","消耗"],a:"注ぎすぎているものを、減らす。",
   t:"時間・お金・感情のどれかを注ぎすぎています。バランスが崩れると、良い関係も濁ります。配分を意識的に決め直しましょう。"}},
 
-{n:15,r:"XV",ja:"悪魔",en:"The Devil",el:"山羊座",
+{n:15,r:"XV",ja:"悪魔",en:"The Devil",
  art:'<circle cx="32" cy="32" r="21"/><path d="M32 52l4.7-14.4H51l-11.6-8.9L43.8 14.3 32 23.3l-11.8-9 4.4 14.4L13 37.6h14.3z"/>',
  up:{k:["執着","束縛","欲望"],a:"依存していると、まず認める。",
   t:"やめたほうがいいと分かっているのに、離れられないものがあるようです。鎖は自分でかけたもの。まずは「依存している」と認めるところから始まります。"},
  rev:{k:["解放","脱却","目覚め"],a:"惰性を、ここで断ち切る。",
   t:"長く縛られていたものから抜け出せる兆し。惰性を断ち切る決断ができます。少し痛みを伴っても、その先の身軽さは本物です。"}},
 
-{n:16,r:"XVI",ja:"塔",en:"The Tower",el:"火星",
+{n:16,r:"XVI",ja:"塔",en:"The Tower",
  art:'<path d="M23 56V28h18v28"/><path d="M23 34h18"/><path d="M20 22l12-8 12 8"/><path d="M52 6l-8 12h5l-7 11"/><circle cx="15" cy="40" r="1.6"/><circle cx="17" cy="50" r="1.6"/>',
  up:{k:["崩壊","衝撃","変化"],a:"守るより、身を軽くする。",
   t:"積み上げてきた前提が突然崩れるかもしれません。ただし壊れるのは、もともと無理のあった部分。守るより、身を軽くして受け止めるほうが被害は少なくて済みます。"},
  rev:{k:["予兆","綻び","危機回避"],a:"見て見ぬふりを、やめる。",
   t:"崩壊は避けられそうですが、ひび割れは残ります。見て見ぬふりをしている不安があるなら、今のうちに手を打って。"}},
 
-{n:17,r:"XVII",ja:"星",en:"The Star",el:"水瓶座",
+{n:17,r:"XVII",ja:"星",en:"The Star",
  art:'<path d="M32 8l6 15 15 6-15 6-6 15-6-15-15-6 15-6z"/><circle cx="13" cy="13" r="1.8"/><circle cx="51" cy="15" r="1.8"/><path d="M10 56q6-4 11 0t11 0 11 0"/>',
  up:{k:["希望","理想","癒し"],a:"願いを、具体的に描く。",
   t:"暗がりの中に、確かな灯りが見えています。願いを具体的に描くほど、それは現実に近づきます。傷ついた心も、静かに回復へ向かうでしょう。"},
  rev:{k:["失望","迷い","理想過剰"],a:"届く高さまで、段を下げる。",
   t:"期待が大きすぎて、現実とのずれに疲れています。理想を捨てる必要はありません。届く高さまで、いったん段を下げてみて。"}},
 
-{n:18,r:"XVIII",ja:"月",en:"The Moon",el:"魚座",
+{n:18,r:"XVIII",ja:"月",en:"The Moon",
  art:'<path d="M38 10a15 15 0 1 0 0 26 12.5 12.5 0 0 1 0-26z"/><path d="M12 56V38h8v18"/><path d="M12 38l4-6 4 6"/><path d="M44 56V38h8v18"/><path d="M44 38l4-6 4 6"/><path d="M8 58h48"/>',
  up:{k:["不安","曖昧","潜在意識"],a:"大きな決断は、今はしない。",
   t:"はっきりしないことが多く、心がざわつく時。見えているものが真実とは限りません。今は大きな決断を避け、夢や直感が知らせるサインに耳を澄ませて。"},
  rev:{k:["霧が晴れる","真実","回復"],a:"そこから、話し直す。",
   t:"長く続いた不安が薄れ、隠れていたことが明らかになります。ようやく足元が見えてきました。誤解が解けるなら、そこから話し直しましょう。"}},
 
-{n:19,r:"XIX",ja:"太陽",en:"The Sun",el:"太陽",
+{n:19,r:"XIX",ja:"太陽",en:"The Sun",
  art:'<circle cx="32" cy="32" r="12"/><path d="M32 8v6M32 50v6M8 32h6M50 32h6M15 15l4.5 4.5M44.5 44.5L49 49M49 15l-4.5 4.5M19.5 44.5L15 49"/>',
  up:{k:["成功","祝福","生命力"],a:"素直に喜んで、素直に見せる。",
   t:"隠すものが何もない、まっすぐな喜びの時。素直に喜び、素直に見せることで、周りにも良い流れが広がります。物事は明るいほうへ進みます。"},
  rev:{k:["空回り","延期","元気不足"],a:"日を浴びて、休む。",
   t:"うまくいくはずのことが、少し遅れているだけ。無邪気さが独りよがりになっていないか点検を。日を浴びて休めば、力は戻ります。"}},
 
-{n:20,r:"XX",ja:"審判",en:"Judgement",el:"冥王星",
+{n:20,r:"XX",ja:"審判",en:"Judgement",
  art:'<path d="M14 40l24-14v20z"/><path d="M11 36h4"/><path d="M43 26a13 13 0 0 1 0 14"/><path d="M49 21a19 19 0 0 1 0 24"/><path d="M32 54v-6"/>',
  up:{k:["復活","再会","決断"],a:"呼ばれたら、応える。",
   t:"過去に終わったはずのものが、形を変えて戻ってきます。これまでの積み重ねが正当に評価される時。呼ばれたと感じたら、応えてください。"},
  rev:{k:["後悔","見送り","停滞"],a:"取り返せるものは、まだある。",
   t:"チャンスに気づかないまま、通り過ぎようとしています。あるいは、過去の判断を悔やんで動けずにいる状態。取り返せるものは、まだ残っています。"}},
 
-{n:21,r:"XXI",ja:"世界",en:"The World",el:"土星",
+{n:21,r:"XXI",ja:"世界",en:"The World",
  art:'<ellipse cx="32" cy="32" rx="15" ry="21"/><ellipse cx="32" cy="32" rx="11" ry="17" opacity=".45"/><circle cx="32" cy="32" r="5"/><circle cx="10" cy="10" r="2"/><circle cx="54" cy="10" r="2"/><circle cx="10" cy="54" r="2"/><circle cx="54" cy="54" r="2"/>',
  up:{k:["完成","達成","統合"],a:"満ちた今を、味わってから次へ。",
   t:"ひとつの物語が、望んだ形で完結します。努力は実り、あなたはいるべき場所にたどり着きました。満ち足りた今を味わってから、次の扉へ。"},
@@ -434,7 +455,14 @@ function shuffle(arr){
   return a;
 }
 function toast(msg){
-  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  let t = $("#toast");
+  if(!t){
+    t = document.createElement("div");
+    t.id = "toast"; t.className = "toast";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  requestAnimationFrame(()=>t.classList.add("show"));
   clearTimeout(t._tm); t._tm = setTimeout(()=>t.classList.remove("show"), 2200);
 }
 
@@ -651,7 +679,7 @@ function buildCeltic(board){
       '<div class="pos">' + (i+1) + '. ' + drawn[i].pos + '</div>' + cardHTML(drawn[i], i) +
       '<div class="orient" data-orient="' + i + '"></div></div>';
 
-  let html = '<div class="cross" style="grid-row:2;grid-column:2">' +
+  let html = '<div class="cross">' +
       '<div class="pos">1. 現状<br>2. 障害</div>' +
       '<div class="cross-stack">' + cardHTML(drawn[0], 0) +
         '<div class="cross-b">' + cardHTML(drawn[1], 1) + '</div>' +
