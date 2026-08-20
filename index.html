@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ポケット・アルカナ｜大アルカナ22枚のタロット</title>
+<title>ポケット・アルカナ</title>
 <meta name="description" content="カードが手元にない日のための、大アルカナ22枚。登録不要・ブラウザだけで引けるタロット。ワンオラクル、スリーカード、ケルト十字、枚数自由のフリースプレッドに対応。解釈を出さないリーダーモード付き。">
 <meta name="theme-color" content="#0d0b1a">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
-<meta property="og:title" content="ポケット・アルカナ｜大アルカナ22枚のタロット">
+<meta property="og:title" content="ポケット・アルカナ">
 <meta property="og:description" content="カードが手元にない日のための、大アルカナ22枚。">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ポケット・アルカナ">
@@ -51,18 +51,7 @@
   header{text-align:center;margin-bottom:26px;}
   h1{margin:0 0 10px;font-size:clamp(26px,5vw,40px);letter-spacing:.24em;font-weight:400;
      color:var(--gold);text-shadow:0 0 26px rgba(212,178,95,.35);}
-  .sub{margin:0;color:var(--muted);font-size:12px;letter-spacing:.3em;}
   .rule{width:220px;height:1px;margin:18px auto 0;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
-
-  .nav{display:flex;justify-content:center;gap:6px;margin:26px 0 30px;flex-wrap:wrap;}
-  .nav button{
-    background:none;border:1px solid transparent;border-bottom:1px solid var(--line);
-    color:var(--muted);font-family:inherit;font-size:13px;letter-spacing:.2em;
-    padding:9px 20px;cursor:pointer;transition:.2s;
-  }
-  .nav button:hover{color:var(--gold-soft);}
-  .nav button.active{color:var(--gold);border-color:var(--line);border-radius:8px 8px 0 0;
-    background:linear-gradient(180deg,rgba(212,178,95,.16),transparent);}
 
   .panel{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:22px;}
   .field{margin-bottom:18px;}
@@ -84,21 +73,6 @@
   .spread-btn.active{background:linear-gradient(180deg,rgba(212,178,95,.3),rgba(212,178,95,.1));
     border-color:var(--gold);color:#fff;}
 
-  .opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
-  .toggle{
-    display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;
-    border:1px solid var(--line);border-radius:999px;padding:8px 15px 8px 11px;
-    font-size:12.5px;letter-spacing:.08em;color:var(--muted);transition:.2s;background:rgba(0,0,0,.2);
-  }
-  .toggle:hover{border-color:rgba(212,178,95,.5);}
-  .toggle .dot{width:30px;height:16px;border-radius:999px;background:rgba(255,255,255,.14);
-    position:relative;transition:.2s;flex:none;}
-  .toggle .dot::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;
-    border-radius:50%;background:#8b83a8;transition:.2s;}
-  .toggle.on{color:var(--gold-soft);border-color:rgba(212,178,95,.45);}
-  .toggle.on .dot{background:rgba(212,178,95,.4);}
-  .toggle.on .dot::after{left:16px;background:var(--gold);}
-
   .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;}
   .btn{padding:13px 30px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:14.5px;
     letter-spacing:.16em;border:1px solid var(--gold);
@@ -109,28 +83,8 @@
   .btn.sm{padding:9px 18px;font-size:12.5px;letter-spacing:.12em;}
   .btn:disabled{opacity:.35;cursor:not-allowed;filter:none;box-shadow:none;}
 
-  /* ---- fan (manual pick) ---- */
-  .fan-wrap{margin-top:38px;text-align:center;}
-  .fan-title{font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px;}
-  .fan-note{font-size:12px;color:var(--muted);letter-spacing:.1em;margin-bottom:22px;}
-  .fan{display:flex;justify-content:center;padding:30px 0 40px;flex-wrap:wrap;}
-  .fan-card{
-    width:62px;height:104px;border-radius:7px;margin-left:-22px;cursor:pointer;flex:none;
-    background:repeating-linear-gradient(45deg,rgba(212,178,95,.12) 0 4px,transparent 4px 8px),
-               linear-gradient(160deg,#2b2160,#150f33);
-    border:1px solid rgba(212,178,95,.4);box-shadow:0 6px 14px rgba(0,0,0,.5);
-    transition:transform .25s, box-shadow .25s, opacity .25s;
-    display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:15px;opacity:.95;
-  }
-  .fan-card:first-child{margin-left:0;}
-  .fan-card:hover{transform:translateY(-16px) scale(1.05);box-shadow:0 14px 26px rgba(0,0,0,.6);z-index:5;}
-  .fan-card.picked{opacity:.28;transform:translateY(10px);pointer-events:none;box-shadow:none;}
-  .fan-count{font-size:12px;letter-spacing:.2em;color:var(--gold-soft);}
-
   /* ---- board ---- */
   .stage{margin-top:36px;}
-  .question-echo{text-align:center;color:var(--muted);font-size:14px;margin-bottom:8px;letter-spacing:.08em;}
-  .question-echo b{color:var(--gold);font-weight:400;}
   .hint{text-align:center;color:var(--muted);font-size:12.5px;letter-spacing:.14em;margin:16px 0 24px;}
   .board{display:flex;flex-wrap:wrap;justify-content:center;gap:26px 20px;}
   .slot{width:var(--cw);text-align:center;}
@@ -170,11 +124,11 @@
   .orient.rev{color:var(--rev);}
 
   /* ---- celtic cross ---- */
-  .board.celtic{--cw:104px;--ch:172px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  .board.celtic{--cw:112px;--ch:185px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
     gap:24px 10px;justify-items:center;align-items:start;max-width:660px;margin:0 auto;}
   .board.celtic .slot{width:var(--cw);}
   .board.celtic .pos{font-size:9.5px;letter-spacing:.06em;line-height:1.5;height:30px;overflow:hidden;}
-  .board.celtic .cname{font-size:10.5px;line-height:1.35;}
+  .board.celtic .cname{font-size:11px;line-height:1.35;}
   .board.celtic .cen{display:none;}
   .board.celtic .art{width:56%;}
   .board.celtic .numeral{font-size:10px;}
@@ -182,21 +136,26 @@
   .cross{width:var(--cw);grid-row:2;grid-column:2;}
   .cross-stack{position:relative;width:var(--cw);height:var(--ch);}
   .cross-stack .card{position:absolute;top:0;left:0;}
+  /* 横向きのカードは少し下げて重ね、下の札の絵柄が見えるようにする */
   .cross-b{position:absolute;top:0;left:0;width:var(--cw);height:var(--ch);
-    transform:rotate(90deg);z-index:4;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));}
-  .orient-pair{display:flex;flex-direction:column;gap:1px;}
+    transform:translateY(22px) rotate(90deg);z-index:4;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.55));transition:transform .25s;}
+  /* タップされた側を前面へ */
+  .cross-stack .card.raised{z-index:9;}
+  .cross-stack .card.raised .face{box-shadow:0 16px 32px rgba(0,0,0,.75);}
+  .cross-b.raised{z-index:9;filter:drop-shadow(0 12px 24px rgba(0,0,0,.75));}
+  /* 前面に出した側を目立たせ、もう一方を控えさせる */
+  .cross-stack > .card, .cross-b{transition:opacity .25s, filter .25s;}
+  .cross-stack:has(.raised) > .card:not(.raised),
+  .cross-stack:has(.raised) > .cross-b:not(.raised){opacity:.45;}
+  /* マウスが乗った側も前面に */
+  @media (hover:hover){
+    .cross-stack > .card:hover{z-index:12;}
+    .cross-b:hover{z-index:12;}
+  }
+  .orient-pair{display:flex;flex-direction:column;gap:8px;margin-top:26px;line-height:1.5;}
 
-  /* ---- summary & readings ---- */
-  .summary{margin-top:44px;border:1px solid rgba(212,178,95,.35);border-radius:14px;padding:24px;
-    background:linear-gradient(180deg,rgba(212,178,95,.1),rgba(255,255,255,.03));}
-  .summary h3{margin:0 0 14px;font-size:14px;letter-spacing:.24em;color:var(--gold);font-weight:400;}
-  .summary p{margin:0 0 10px;line-height:2;font-size:15px;color:#e6e0f2;}
-  .summary p:last-child{margin-bottom:0;}
-  .meter{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 4px;}
-  .chip{font-size:11.5px;letter-spacing:.1em;border:1px solid var(--line);border-radius:999px;
-    padding:5px 13px;color:var(--muted);}
-  .chip b{color:var(--gold-soft);font-weight:400;}
-
+  /* ---- readings ---- */
   .readings{margin-top:20px;display:flex;flex-direction:column;gap:16px;}
   .reading{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);
     padding:20px 22px;opacity:0;transform:translateY(12px);animation:rise .55s ease forwards;}
@@ -227,86 +186,28 @@
   .daily-body p{margin:0;font-size:14px;line-height:1.95;color:#ddd6ea;}
   .daily-body .tap{color:var(--muted);font-size:12.5px;letter-spacing:.14em;}
 
-  /* ---- codex ---- */
-  .codex{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px;}
-  .cx{border:1px solid var(--line);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;
-    background:linear-gradient(170deg,rgba(36,28,82,.7),rgba(21,16,47,.7));transition:.2s;}
-  .cx:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 10px 22px rgba(0,0,0,.45);}
-  .cx .art{width:54px;margin:0 auto 8px;}
-  .cx .n{font-size:10px;letter-spacing:.16em;color:var(--gold);}
-  .cx .j{font-size:13px;color:#fff;letter-spacing:.06em;margin-top:3px;}
-  .cx .e{font-size:8px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-
-  /* ---- history ---- */
-  .hist{display:flex;flex-direction:column;gap:12px;}
-  .hrow{border:1px solid var(--line);border-radius:11px;padding:15px 18px;background:rgba(255,255,255,.03);
-    display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
-  .hrow .when{font-size:11.5px;color:var(--muted);letter-spacing:.1em;flex:none;}
-  .hrow .what{flex:1 1 200px;min-width:0;}
-  .hrow .sp{font-size:12px;color:var(--gold);letter-spacing:.14em;}
-  .hrow .cards{font-size:13px;color:#ddd6ea;margin-top:4px;line-height:1.7;}
-  .hrow .q{font-size:12px;color:var(--muted);margin-top:4px;}
-  .empty{text-align:center;color:var(--muted);font-size:13.5px;letter-spacing:.1em;padding:50px 0;line-height:2;}
-
-  /* ---- modal ---- */
-  .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;}
-  .modal.open{display:flex;}
-  .modal-bg{position:absolute;inset:0;background:rgba(6,4,16,.82);backdrop-filter:blur(4px);}
-  .modal-box{position:relative;max-width:520px;width:100%;max-height:86vh;overflow:auto;
-    border:1px solid rgba(212,178,95,.4);border-radius:16px;padding:28px;
-    background:linear-gradient(170deg,#241c52,#140f2e);box-shadow:0 24px 60px rgba(0,0,0,.7);
-    animation:pop .3s ease;}
-  @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97);}to{opacity:1;transform:none;}}
-  .modal-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);
-    font-size:24px;cursor:pointer;line-height:1;padding:6px;}
-  .modal-close:hover{color:var(--gold);}
-  .m-art{width:96px;margin:4px auto 14px;color:var(--gold);filter:drop-shadow(0 0 12px rgba(212,178,95,.4));}
-  .m-title{text-align:center;margin-bottom:6px;}
-  .m-title .n{font-size:11px;letter-spacing:.24em;color:var(--gold);}
-  .m-title .j{font-size:24px;color:#fff;letter-spacing:.1em;margin:6px 0 3px;}
-  .m-title .e{font-size:10px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;}
-  .m-el{text-align:center;font-size:11.5px;color:var(--muted);letter-spacing:.14em;margin:12px 0 20px;}
-  .m-sec{border-top:1px solid var(--line);padding-top:16px;margin-top:16px;}
-  .m-sec h4{margin:0 0 10px;font-size:12px;letter-spacing:.2em;font-weight:400;}
-  .m-sec.up h4{color:var(--gold);}
-  .m-sec.rev h4{color:var(--rev);}
-  .m-sec p{margin:10px 0 0;font-size:14px;line-height:2;color:#ded7ea;}
-
   .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
     background:rgba(20,14,44,.95);border:1px solid var(--gold);color:var(--gold-soft);
     padding:11px 24px;border-radius:999px;font-size:13px;letter-spacing:.12em;z-index:60;
     opacity:0;pointer-events:none;transition:.3s;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-  .tagline{margin:16px 0 0;font-size:14px;color:#d8d0ea;letter-spacing:.14em;}
-  .lead{margin:9px 0 0;font-size:11.5px;color:var(--muted);letter-spacing:.08em;line-height:2;}
   .free-row{display:flex;gap:10px;flex-wrap:wrap;}
   .free-row input[type=number]{width:96px;padding:12px;border-radius:9px;border:1px solid rgba(212,178,95,.28);
     background:rgba(0,0,0,.28);color:var(--ink);font-family:inherit;font-size:15px;outline:none;text-align:center;}
   .free-row input[type=text]{flex:1 1 260px;}
-  .memo-box{margin-top:30px;border:1px solid var(--line);border-radius:12px;padding:18px 20px;
-    background:rgba(255,255,255,.03);}
-  .memo-box textarea{width:100%;padding:12px 14px;border-radius:9px;border:1px solid rgba(212,178,95,.28);
-    background:rgba(0,0,0,.28);color:var(--ink);font-family:inherit;font-size:14.5px;line-height:1.9;
-    outline:none;resize:vertical;}
-  .memo-box textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,178,95,.1);}
   .banner{border:1px solid rgba(212,178,95,.45);background:rgba(212,178,95,.1);border-radius:12px;
     padding:15px 18px;margin-bottom:22px;text-align:center;font-size:13.5px;color:var(--gold-soft);
     letter-spacing:.08em;line-height:1.9;}
-  .memo-line{font-size:12px;color:var(--gold-soft);margin-top:5px;white-space:pre-wrap;}
-  .view{display:none;}
-  .view.active{display:block;animation:rise .4s ease;}
   footer{margin-top:64px;text-align:center;color:var(--muted);font-size:11px;letter-spacing:.16em;line-height:2;}
 
   @media(max-width:560px){
     :root{--cw:132px;--ch:218px;}
     .board{gap:20px 14px;}
-    .board.celtic{--cw:74px;--ch:122px;gap:14px 6px;}
+    .board.celtic{--cw:80px;--ch:132px;gap:14px 5px;}
     .board.celtic .cname{font-size:8.5px;}
     .board.celtic .numeral{font-size:8px;}
-    .board.celtic .cross{height:calc(var(--ch) + 30px);}
     .board.celtic .pos{font-size:8.5px;letter-spacing:.06em;}
-    .fan-card{width:46px;height:78px;margin-left:-18px;}
     .wrap{padding:32px 14px 70px;}
     .panel{padding:18px;}
   }
@@ -316,83 +217,34 @@
 <div class="wrap">
   <header>
     <h1>POCKET ARCANA</h1>
-    <p class="sub">ポ ケ ッ ト ・ ア ル カ ナ</p>
     <div class="rule"></div>
-    <p class="tagline">カードが手元にない日の、大アルカナ22枚。</p>
-    <p class="lead">そのまま占ってもいいし、リーディングの下敷きにしてもいい。<br>
-    登録不要・通信なし。すべてこのページの中だけで動きます。</p>
-    <nav class="nav">
-      <button data-view="read" class="active">占う</button>
-      <button data-view="codex">カード図鑑</button>
-      <button data-view="history">履歴</button>
-    </nav>
   </header>
 
-  <!-- ============ 占う ============ -->
-  <section class="view active" id="view-read">
-    <div class="daily" id="daily"></div>
+  <div class="daily" id="daily"></div>
 
-    <div class="panel">
-      <div class="field">
-        <label class="cap" for="q">占いたいこと（任意）</label>
-        <input type="text" id="q" placeholder="例：これから始める仕事はうまくいく？" maxlength="60">
-      </div>
-      <div class="field">
-        <label class="cap">スプレッドを選ぶ</label>
-        <div class="spreads" id="spreads"></div>
-      </div>
-      <div class="field" id="freeBox" style="display:none">
-        <label class="cap">フリースプレッドの設定</label>
-        <div class="free-row">
-          <input type="number" id="freeN" min="1" max="22" value="3" aria-label="枚数">
-          <input type="text" id="freePos" maxlength="120"
-                 placeholder="ポジション名をカンマ区切りで（省略可）例：現状, 課題, 助言">
-        </div>
-      </div>
-      <div class="field" style="margin-bottom:0">
-        <label class="cap">設定</label>
-        <div class="opts">
-          <div class="toggle" id="t-manual"><span class="dot"></span><span>自分でカードを選ぶ</span></div>
-          <div class="toggle on" id="t-rev"><span class="dot"></span><span>逆位置を使う</span></div>
-          <div class="toggle" id="t-sound"><span class="dot"></span><span>効果音</span></div>
-          <div class="toggle" id="t-reader"><span class="dot"></span><span>リーダーモード（解釈を出さない）</span></div>
-        </div>
-      </div>
-      <div class="actions">
-        <button class="btn" id="draw">カードを引く</button>
-        <button class="btn ghost" id="reset" disabled>リセット</button>
+  <div class="panel">
+    <div class="field">
+      <label class="cap">スプレッドを選ぶ</label>
+      <div class="spreads" id="spreads"></div>
+    </div>
+    <div class="field" id="freeBox" style="display:none">
+      <label class="cap">フリースプレッドの設定</label>
+      <div class="free-row">
+        <input type="number" id="freeN" min="1" max="22" value="3" aria-label="枚数">
+        <input type="text" id="freePos" maxlength="120"
+               placeholder="ポジション名をカンマ区切りで（省略可）例：現状, 課題, 助言">
       </div>
     </div>
-
-    <div id="fanArea"></div>
-    <div class="stage" id="stage"></div>
-  </section>
-
-  <!-- ============ 図鑑 ============ -->
-  <section class="view" id="view-codex">
-    <p class="hint">22枚それぞれの意味を確認できます。カードをタップすると詳細が開きます。</p>
-    <div class="codex" id="codex"></div>
-  </section>
-
-  <!-- ============ 履歴 ============ -->
-  <section class="view" id="view-history">
-    <div class="actions" style="margin:0 0 22px;justify-content:flex-end">
-      <button class="btn ghost sm" id="clearHist">履歴をすべて削除</button>
+    <div class="actions">
+      <button class="btn" id="draw">カードを引く</button>
+      <button class="btn ghost" id="reset" disabled>リセット</button>
     </div>
-    <div class="hist" id="hist"></div>
-  </section>
+  </div>
 
-  <footer>
-    占いは背中を押すためのもの。最後に決めるのは、あなた自身です。<br>
-    ポケット・アルカナ ／ Pocket Arcana ── Major Arcana 0 – XXI
-  </footer>
-</div>
+  <div class="stage" id="stage"></div>
 
-<div class="modal" id="modal">
-  <div class="modal-bg"></div>
-  <div class="modal-box" id="modalBox"></div>
+  <footer>Major Arcana 0 – XXI</footer>
 </div>
-<div class="toast" id="toast"></div>
 
 <script>
 /* ============================================================
@@ -568,7 +420,6 @@ const SPREADS = [
    共通ユーティリティ
    ============================================================ */
 const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const svgOf = c => '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + c.art + '</svg>';
 
@@ -588,44 +439,10 @@ function toast(msg){
 }
 
 /* ---- 保存 ---- */
-const SKEY = "tarot_settings_v2", HKEY = "tarot_history_v2", DKEY = "tarot_daily_v2";
+const DKEY = "tarot_daily_v2";
 const store = {
   get(k, def){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; }catch(e){ return def; } },
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-};
-
-const settings = Object.assign({manual:false, reversed:true, sound:false, reader:false}, store.get(SKEY, {}));
-
-/* ---- 効果音（WebAudio・外部ファイル不要） ---- */
-const Sound = {
-  ctx:null,
-  ready(){
-    if(!settings.sound) return null;
-    if(!this.ctx){ const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return null; this.ctx = new AC(); }
-    if(this.ctx.state === "suspended") this.ctx.resume();
-    return this.ctx;
-  },
-  tone(freq, dur, type, vol){
-    const c = this.ready(); if(!c) return;
-    const o = c.createOscillator(), g = c.createGain();
-    o.type = type || "triangle"; o.frequency.setValueAtTime(freq, c.currentTime);
-    o.frequency.exponentialRampToValueAtTime(freq*0.6, c.currentTime + dur);
-    g.gain.setValueAtTime(0.0001, c.currentTime);
-    g.gain.exponentialRampToValueAtTime(vol || 0.12, c.currentTime + 0.015);
-    g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + dur);
-    o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + dur + 0.02);
-  },
-  flip(){ this.tone(760, 0.22, "triangle", 0.10); setTimeout(()=>this.tone(1180, 0.16, "sine", 0.05), 40); },
-  shuffle(){
-    const c = this.ready(); if(!c) return;
-    const len = 0.5, buf = c.createBuffer(1, c.sampleRate*len, c.sampleRate), d = buf.getChannelData(0);
-    for(let i=0;i<d.length;i++){ d[i] = (Math.random()*2-1) * Math.pow(1 - i/d.length, 2.2); }
-    const src = c.createBufferSource(); src.buffer = buf;
-    const f = c.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 2400; f.Q.value = 0.8;
-    const g = c.createGain(); g.gain.value = 0.16;
-    src.connect(f); f.connect(g); g.connect(c.destination); src.start();
-  },
-  done(){ [523.25, 659.25, 783.99, 1046.5].forEach((f,i)=> setTimeout(()=>this.tone(f, 0.9, "sine", 0.07), i*110)); }
 };
 
 /* ============================================================
@@ -633,23 +450,7 @@ const Sound = {
    ============================================================ */
 let current = SPREADS[1];
 let drawn = [];
-let pickPool = [];
 let gen = 0;          /* 引き直したら古いアニメーションを無効化するための世代番号 */
-let sessionId = 0;    /* 1回の鑑定＝1件の履歴。メモ更新時に同じ行を上書きする */
-let sharedView = false;
-let memoTimer = null;
-
-/* ============================================================
-   ナビゲーション
-   ============================================================ */
-$$(".nav button").forEach(b=>{
-  b.onclick = ()=>{
-    $$(".nav button").forEach(x=>x.classList.toggle("active", x===b));
-    $$(".view").forEach(v=>v.classList.toggle("active", v.id === "view-" + b.dataset.view));
-    if(b.dataset.view === "history") renderHistory();
-    window.scrollTo({top:0, behavior:"smooth"});
-  };
-});
 
 /* ============================================================
    今日の一枚
@@ -691,7 +492,6 @@ function renderDaily(){
 
   if(!opened){
     $("#dailyCard").onclick = ()=>{
-      Sound.flip();
       store.set(DKEY, {date:key, open:true});
       $("#dailyCard").classList.add("flipped");
       setTimeout(renderDaily, 900);
@@ -700,7 +500,7 @@ function renderDaily(){
 }
 
 /* ============================================================
-   スプレッド選択・設定トグル
+   スプレッド選択
    ============================================================ */
 const spreadsEl = $("#spreads");
 SPREADS.forEach(s=>{
@@ -716,37 +516,13 @@ SPREADS.forEach(s=>{
   spreadsEl.appendChild(b);
 });
 
-function bindToggle(id, key, after){
-  const el = $(id);
-  el.classList.toggle("on", !!settings[key]);
-  el.onclick = ()=>{
-    settings[key] = !settings[key];
-    el.classList.toggle("on", settings[key]);
-    store.set(SKEY, settings);
-    if(after) after();
-  };
-}
-bindToggle("#t-manual", "manual");
-bindToggle("#t-rev", "reversed");
-bindToggle("#t-sound", "sound", ()=>{ if(settings.sound) Sound.flip(); });
-bindToggle("#t-reader", "reader", ()=>{ if(drawn.length && drawn.every(d=>d.flipped)) redrawReadings(); });
-
-/* リーダーモードを切り替えたとき、解釈欄だけを出し直す */
-function redrawReadings(){
-  const box = $("#readings"); if(!box) return;
-  box.innerHTML = "";
-  if(settings.reader){ $("#summaryArea").innerHTML = ""; return; }
-  drawn.forEach((d,i)=>{ if(d.flipped) addReading(d, i); });
-  renderSummary();
-}
-
 /* ============================================================
    カードを引く
    ============================================================ */
 function pickCards(n){
   return shuffle(DECK).slice(0, n).map(c=>({
     card:c,
-    reversed: settings.reversed ? Math.random() < 0.5 : false
+    reversed: Math.random() < 0.5
   }));
 }
 
@@ -761,13 +537,10 @@ function startDraw(){
     current.pos = [];
     for(let i=0;i<n;i++) current.pos.push(names[i] || (i+1) + "枚目");
   }
-  sharedView = false;
   clearHash();
   $("#draw").textContent = "引き直す";
   $("#reset").disabled = false;
-  Sound.shuffle();
-  if(settings.manual) renderFan();
-  else { $("#fanArea").innerHTML = ""; dealAuto(); }
+  dealAuto();
 }
 
 function dealAuto(){
@@ -775,55 +548,6 @@ function dealAuto(){
   drawn = picked.map((p,i)=>({...p, pos:current.pos[i], flipped:false}));
   renderBoard();
   setTimeout(()=>$("#stage").scrollIntoView({behavior:"smooth", block:"start"}), 80);
-}
-
-/* ---- 自分で選ぶ（扇） ---- */
-function renderFan(){
-  gen++;
-  drawn = [];
-  $("#stage").innerHTML = "";
-  pickPool = shuffle(DECK);
-  const need = current.pos.length;
-  let chosen = [];
-
-  const wrap = document.createElement("div");
-  wrap.className = "fan-wrap";
-  wrap.innerHTML =
-    '<div class="fan-title">' + current.name + '</div>' +
-    '<div class="fan-note">直感で ' + need + ' 枚えらんでください</div>' +
-    '<div class="fan" id="fan"></div>' +
-    '<div class="fan-count" id="fanCount">0 / ' + need + '</div>';
-  $("#fanArea").innerHTML = "";
-  $("#fanArea").appendChild(wrap);
-
-  const fan = $("#fan");
-  for(let i=0;i<22;i++){
-    const el = document.createElement("div");
-    el.className = "fan-card";
-    el.textContent = "✵";
-    el.onclick = ()=>{
-      if(el.classList.contains("picked")) return;
-      el.classList.add("picked");
-      Sound.flip();
-      chosen.push(pickPool[i]);
-      $("#fanCount").textContent = chosen.length + " / " + need;
-      if(chosen.length === need){
-        drawn = chosen.map((c,k)=>({
-          card:c,
-          reversed: settings.reversed ? Math.random() < 0.5 : false,
-          pos: current.pos[k],
-          flipped:false
-        }));
-        setTimeout(()=>{
-          $("#fanArea").innerHTML = "";
-          renderBoard();
-          $("#stage").scrollIntoView({behavior:"smooth", block:"start"});
-        }, 420);
-      }
-    };
-    fan.appendChild(el);
-  }
-  wrap.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
 /* ============================================================
@@ -850,16 +574,8 @@ function slotHTML(d, i){
 
 function renderBoard(){
   gen++;
-  const q = $("#q").value.trim();
   const stage = $("#stage");
   stage.innerHTML = "";
-
-  if(q){
-    const e = document.createElement("p");
-    e.className = "question-echo";
-    e.innerHTML = "占うこと ── <b>" + esc(q) + "</b>";
-    stage.appendChild(e);
-  }
 
   const bar = document.createElement("div");
   bar.className = "actions";
@@ -873,9 +589,7 @@ function renderBoard(){
 
   const hint = document.createElement("p");
   hint.className = "hint"; hint.id = "hint";
-  hint.textContent = settings.reader
-    ? "カードをタップしてめくってください（リーダーモード：解釈は表示しません）"
-    : "カードをタップしてめくってください";
+  hint.textContent = "カードをタップしてめくってください";
   stage.appendChild(hint);
 
   const board = document.createElement("div");
@@ -886,29 +600,15 @@ function renderBoard(){
   if(current.layout === "celtic") buildCeltic(board);
   else drawn.forEach((d,i)=> board.insertAdjacentHTML("beforeend", slotHTML(d, i)));
 
-  const sum = document.createElement("div");
-  sum.id = "summaryArea";
-  stage.appendChild(sum);
-
   const readings = document.createElement("div");
   readings.className = "readings"; readings.id = "readings";
   stage.appendChild(readings);
 
-  const memo = document.createElement("div");
-  memo.className = "memo-box";
-  memo.innerHTML = '<label class="cap" for="memo">この鑑定のメモ（履歴に一緒に残ります）</label>' +
-    '<textarea id="memo" rows="3" placeholder="クライアント名、気づいたこと、話した内容など"></textarea>';
-  stage.appendChild(memo);
-
-  sessionId = Date.now();
   bindBoard();
   $("#flipAll").onclick = flipAll;
   $("#addCard").onclick = addCard;
   $("#copyBtn").onclick = copyResult;
   $("#shareBtn").onclick = shareLink;
-  $("#memo").addEventListener("input", ()=>{
-    clearTimeout(memoTimer); memoTimer = setTimeout(saveHistory, 600);
-  });
 }
 
 /* 追加されたカードにもクリックを効かせる */
@@ -916,7 +616,7 @@ function bindBoard(){
   document.querySelectorAll("#board .card").forEach(c=>{
     if(c.dataset.bound) return;
     c.dataset.bound = "1";
-    c.addEventListener("click", ()=> flip(+c.dataset.i));
+    c.addEventListener("click", ()=>{ const i = +c.dataset.i; raiseCross(i); flip(i); });
   });
 }
 
@@ -927,7 +627,7 @@ function addCard(){
   const rest = DECK.filter(c=> used.indexOf(c.n) === -1);
   const c = rest[Math.floor(Math.random()*rest.length)];
   const extras = drawn.filter(x=>x.extra).length + 1;
-  const d = {card:c, reversed: settings.reversed ? Math.random() < 0.5 : false,
+  const d = {card:c, reversed: Math.random() < 0.5,
              pos:"追加 " + extras, extra:true, flipped:false};
   drawn.push(d);
   const i = drawn.length - 1;
@@ -941,7 +641,6 @@ function addCard(){
     board.insertAdjacentHTML("beforeend", slotHTML(d, i));
   }
   bindBoard();
-  Sound.shuffle();
   const hint = $("#hint");
   if(hint) hint.textContent = "── " + d.pos + " を引きました ──";
 }
@@ -957,8 +656,10 @@ function buildCeltic(board){
       '<div class="cross-stack">' + cardHTML(drawn[0], 0) +
         '<div class="cross-b">' + cardHTML(drawn[1], 1) + '</div>' +
       '</div>' +
-      '<div class="orient-pair"><div class="orient" data-orient="0" data-label="1. "></div>' +
-      '<div class="orient" data-orient="1" data-label="2. "></div></div>' +
+      '<div class="orient-pair">' +
+        '<div class="orient" data-orient="0" data-label="1. " data-name="1"></div>' +
+        '<div class="orient" data-orient="1" data-label="2. " data-name="1"></div>' +
+      '</div>' +
     '</div>';
   html += cell(2, 1, 2);   // 目標
   html += cell(3, 3, 2);   // 基盤
@@ -974,17 +675,37 @@ function buildCeltic(board){
 /* ============================================================
    めくる
    ============================================================ */
+/* ケルト十字の交差部分：タップした側を一時的に前面へ。
+   少ししたら本来の重ね順（②が①を横切る）に自動で戻す。 */
+let crossTimer = null;
+function raiseCross(i){
+  if(i > 1) return;
+  const stack = document.querySelector(".cross-stack");
+  if(!stack) return;
+  const a = stack.querySelector('.card[data-i="0"]');
+  const b = stack.querySelector(".cross-b");
+  if(!a || !b) return;
+  a.classList.toggle("raised", i === 0);
+  b.classList.toggle("raised", i === 1);
+  clearTimeout(crossTimer);
+  crossTimer = setTimeout(()=>{
+    a.classList.remove("raised");
+    b.classList.remove("raised");
+  }, 3500);
+}
+
 function flip(i){
   const d = drawn[i];
   if(!d || d.flipped) return;
   d.flipped = true;
-  Sound.flip();
 
   document.querySelectorAll('.card[data-i="' + i + '"]').forEach(c=>c.classList.add("flipped"));
   const o = document.querySelector('[data-orient="' + i + '"]');
   if(o){
     o.className = "orient " + (d.reversed ? "rev" : "up");
-    o.textContent = (o.dataset.label || "") + (d.reversed ? "逆位置" : "正位置");
+    const pos = d.reversed ? "逆位置" : "正位置";
+    if(o.dataset.name) o.innerHTML = (o.dataset.label || "") + esc(d.card.ja) + "<br>" + pos;
+    else o.textContent = (o.dataset.label || "") + pos;
   }
   const g = gen;
   setTimeout(()=>{ if(g === gen) addReading(d, i); }, 420);
@@ -1000,13 +721,9 @@ function flipAll(){
 function finish(){
   const h = $("#hint");
   if(h) h.textContent = "── すべてのカードが開かれました ──";
-  renderSummary();
-  Sound.done();
-  saveHistory();
 }
 
 function addReading(d, i){
-  if(settings.reader) return;
   const m = d.reversed ? d.card.rev : d.card.up;
   const el = document.createElement("div");
   el.className = "reading" + (d.reversed ? " rev" : "");
@@ -1030,90 +747,19 @@ function addReading(d, i){
 }
 
 /* ============================================================
-   総合リーディング
-   ============================================================ */
-function renderSummary(){
-  if(settings.reader){ const s = $("#summaryArea"); if(s) s.innerHTML = ""; return; }
-  const total = drawn.length;
-  const revN = drawn.filter(d=>d.reversed).length;
-  const upN = total - revN;
-  const avg = drawn.reduce((s,d)=>s+d.card.n, 0) / total;
-  const nums = drawn.map(d=>d.card.n);
-  const has = n => nums.includes(n);
-
-  let p1;
-  if(total === 1){
-    p1 = drawn[0].reversed
-      ? "引かれた一枚は逆位置。今は勢いよりも、立ち止まって整えることが求められています。"
-      : "引かれた一枚は正位置。素直に受け取って、そのまま進んで大丈夫です。";
-  } else if(revN === 0){
-    p1 = "すべて正位置。流れは完全にあなたの側にあります。迷いを挟まず、思った通りに進めてよい配置です。";
-  } else if(upN === 0){
-    p1 = "すべて逆位置。今は外へ働きかける時期ではなく、内側を整える時期。焦って動かすほど絡まります。休むことも立派な一手です。";
-  } else if(revN / total >= 0.6){
-    p1 = "逆位置が" + revN + "枚と多め。進めたい気持ちと、現実の準備とがまだ噛み合っていません。ひとつずつ引っかかりを外していきましょう。";
-  } else if(revN / total <= 0.4){
-    p1 = "正位置が" + upN + "枚と優勢。全体としては良い流れです。逆位置の箇所だけ、丁寧に手当てすれば十分でしょう。";
-  } else {
-    p1 = "正位置と逆位置が拮抗しています。良いことも面倒なことも半々——それはつまり、あなたの選び方しだいで転ぶ方向が決まるということ。";
-  }
-
-  let p2;
-  if(avg < 7) p2 = "全体の重心は大アルカナの前半にあります。物語はまだ始まったばかり。結論を急がず、種をまく段階だと考えてください。";
-  else if(avg < 14.5) p2 = "全体の重心は大アルカナの中盤。試練と転換の只中にいます。ここで踏ん張れるかどうかが、後の景色を大きく変えます。";
-  else p2 = "全体の重心は大アルカナの後半。ひとつの流れが仕上げに向かっています。あと少し、丁寧に締めくくることに力を注いで。";
-
-  let p3 = "";
-  const heavy = [13,15,16,18].filter(has);
-  const bright = [17,19,21,10].filter(has);
-  if(heavy.length && bright.length){
-    p3 = "揺らぎのカードと祝福のカードが同時に出ています。壊れるものと生まれるものが隣り合う時期。失うことを恐れすぎないでください。";
-  } else if(heavy.length >= 2){
-    p3 = "重たいカードが複数。無理のある部分に負荷がかかっています。守りを固めるより、いらないものを手放すほうが軽くなります。";
-  } else if(heavy.length === 1){
-    const c = DECK[heavy[0]];
-    p3 = "「" + c.ja + "」が混じっています。避けたい出来事に見えても、これは行き止まりではなく方向転換の合図です。";
-  } else if(bright.length >= 2){
-    p3 = "明るいカードが複数そろいました。願いが形になりやすい時期です。動くなら今、遠慮はいりません。";
-  } else if(bright.length === 1){
-    const c = DECK[bright[0]];
-    p3 = "「" + c.ja + "」が味方についています。ここがこの配置のいちばんの支えになります。";
-  }
-
-  const keys = [];
-  drawn.forEach(d=>{ const m = d.reversed ? d.card.rev : d.card.up; keys.push(m.k[0]); });
-
-  $("#summaryArea").innerHTML =
-    '<div class="summary">' +
-      '<h3>総 合 リ ー デ ィ ン グ</h3>' +
-      '<div class="meter">' +
-        '<span class="chip">正位置 <b>' + upN + '</b></span>' +
-        '<span class="chip">逆位置 <b>' + revN + '</b></span>' +
-        '<span class="chip">重心 <b>' + avg.toFixed(1) + '</b> / 21</span>' +
-        '<span class="chip">キーワード <b>' + keys.slice(0,4).join("・") + '</b></span>' +
-      '</div>' +
-      '<p>' + p1 + '</p><p>' + p2 + '</p>' + (p3 ? '<p>' + p3 + '</p>' : '') +
-    '</div>';
-}
-
-/* ============================================================
    結果のコピー
    ============================================================ */
 function resultText(){
-  const q = $("#q").value.trim();
   const now = new Date();
   const stamp = now.getFullYear() + "/" + (now.getMonth()+1) + "/" + now.getDate() + " " +
     String(now.getHours()).padStart(2,"0") + ":" + String(now.getMinutes()).padStart(2,"0");
   let t = "【タロット占い】" + stamp + "\n" + "スプレッド：" + current.name + "\n";
-  if(q) t += "占うこと：" + q + "\n";
   t += "────────────\n";
   drawn.forEach((d,i)=>{
     const m = d.reversed ? d.card.rev : d.card.up;
     t += (i+1) + ". " + d.pos + "：" + d.card.r + " " + d.card.ja +
          "（" + (d.reversed ? "逆位置" : "正位置") + "）\n   " + m.k.join("・") + "\n   " + m.t + "\n";
   });
-  const memoEl = $("#memo");
-  if(memoEl && memoEl.value.trim()) t += "────────────\nメモ：" + memoEl.value.trim() + "\n";
   return t;
 }
 function copyResult(){
@@ -1154,7 +800,7 @@ function shareLink(){
   const o = {
     s: current.name, l: current.layout || "",
     p: drawn.map(d=>d.pos), c: drawn.map(d=>d.card.n),
-    r: drawn.map(d=>d.reversed ? 1 : 0), q: $("#q").value.trim()
+    r: drawn.map(d=>d.reversed ? 1 : 0)
   };
   copyText(baseUrl() + "#r=" + b64e(JSON.stringify(o)), "共有リンクをコピーしました");
 }
@@ -1166,8 +812,6 @@ function loadShared(){
     if(!o.c || !o.c.length) return false;
     current = {id:"shared", name:o.s || "共有された配置", pos:o.p, layout:o.l || undefined};
     drawn = o.c.map((n,i)=>({card:DECK[n], reversed:!!(o.r && o.r[i]), pos:(o.p && o.p[i]) || (i+1) + "枚目", flipped:false}));
-    sharedView = true;
-    $("#q").value = o.q || "";
     $("#draw").textContent = "自分で引き直す";
     $("#reset").disabled = false;
     renderBoard();
@@ -1181,109 +825,17 @@ function loadShared(){
 }
 
 /* ============================================================
-   履歴
-   ============================================================ */
-function saveHistory(){
-  if(sharedView || !drawn.length) return;
-  const memoEl = $("#memo");
-  const list = store.get(HKEY, []);
-  const rec = {
-    id: sessionId,
-    ts: Date.now(),
-    spread: current.name,
-    q: $("#q").value.trim(),
-    memo: memoEl ? memoEl.value.trim() : "",
-    cards: drawn.map(d=>({n:d.card.n, rev:d.reversed, pos:d.pos}))
-  };
-  const at = list.findIndex(x=>x.id === sessionId);
-  if(at >= 0){ rec.ts = list[at].ts; list[at] = rec; }
-  else list.unshift(rec);
-  store.set(HKEY, list.slice(0, 50));
-}
-function renderHistory(){
-  const list = store.get(HKEY, []);
-  const box = $("#hist");
-  if(!list.length){
-    box.innerHTML = '<p class="empty">まだ履歴がありません。<br>占いを終えると、ここに自動で残ります。</p>';
-    return;
-  }
-  box.innerHTML = list.map((h,idx)=>{
-    const d = new Date(h.ts);
-    const when = (d.getMonth()+1) + "/" + d.getDate() + " " +
-      String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
-    const cards = h.cards.map(c=>{
-      const card = DECK[c.n];
-      return '<span style="color:' + (c.rev ? "var(--rev)" : "var(--gold-soft)") + '">' +
-             card.ja + (c.rev ? "(逆)" : "") + '</span>';
-    }).join(" ／ ");
-    return '<div class="hrow">' +
-      '<div class="when">' + when + '</div>' +
-      '<div class="what"><div class="sp">' + h.spread + '</div>' +
-        '<div class="cards">' + cards + '</div>' +
-        (h.q ? '<div class="q">「' + esc(h.q) + '」</div>' : '') +
-        (h.memo ? '<div class="memo-line">✎ ' + esc(h.memo) + '</div>' : '') + '</div>' +
-      '<button class="btn ghost sm" data-del="' + idx + '">削除</button></div>';
-  }).join("");
-  box.querySelectorAll("[data-del]").forEach(b=>{
-    b.onclick = ()=>{
-      const l = store.get(HKEY, []); l.splice(+b.dataset.del, 1); store.set(HKEY, l);
-      renderHistory(); toast("削除しました");
-    };
-  });
-}
-$("#clearHist").onclick = ()=>{
-  if(!store.get(HKEY, []).length){ toast("履歴はありません"); return; }
-  store.set(HKEY, []); renderHistory(); toast("履歴を削除しました");
-};
-
-/* ============================================================
-   カード図鑑
-   ============================================================ */
-function renderCodex(){
-  $("#codex").innerHTML = DECK.map(c=>
-    '<div class="cx" data-n="' + c.n + '">' +
-      '<div class="art">' + svgOf(c) + '</div>' +
-      '<div class="n">' + c.r + '</div>' +
-      '<div class="j">' + c.ja + '</div>' +
-      '<div class="e">' + c.en + '</div>' +
-    '</div>').join("");
-  $$(".cx").forEach(el=> el.onclick = ()=> openCard(DECK[+el.dataset.n]));
-}
-function openCard(c){
-  $("#modalBox").innerHTML =
-    '<button class="modal-close" id="mClose">×</button>' +
-    '<div class="m-art">' + svgOf(c) + '</div>' +
-    '<div class="m-title"><div class="n">' + c.r + '</div>' +
-      '<div class="j">' + c.ja + '</div><div class="e">' + c.en + '</div></div>' +
-    '<div class="m-el">対応：' + c.el + '</div>' +
-    '<div class="m-sec up"><h4>正 位 置</h4>' +
-      '<div class="r-keys">' + c.up.k.map(k=>'<span class="key">' + k + '</span>').join("") + '</div>' +
-      '<p>' + c.up.t + '</p><p class="r-adv"><b>ADVICE</b>' + c.up.a + '</p></div>' +
-    '<div class="m-sec rev"><h4>逆 位 置</h4>' +
-      '<div class="r-keys">' + c.rev.k.map(k=>'<span class="key">' + k + '</span>').join("") + '</div>' +
-      '<p>' + c.rev.t + '</p><p class="r-adv"><b>ADVICE</b>' + c.rev.a + '</p></div>';
-  $("#modal").classList.add("open");
-  $("#mClose").onclick = closeModal;
-}
-function closeModal(){ $("#modal").classList.remove("open"); }
-$("#modal").querySelector(".modal-bg").onclick = closeModal;
-document.addEventListener("keydown", e=>{ if(e.key === "Escape") closeModal(); });
-
-/* ============================================================
    初期化
    ============================================================ */
 $("#draw").onclick = startDraw;
-$("#q").addEventListener("keydown", e=>{ if(e.key === "Enter") startDraw(); });
 $("#reset").onclick = ()=>{
-  gen++; drawn = []; sharedView = false; clearHash();
-  $("#stage").innerHTML = ""; $("#fanArea").innerHTML = "";
-  $("#q").value = ""; $("#draw").textContent = "カードを引く"; $("#reset").disabled = true;
+  gen++; drawn = []; clearHash();
+  $("#stage").innerHTML = "";
+  $("#draw").textContent = "カードを引く"; $("#reset").disabled = true;
   window.scrollTo({top:0, behavior:"smooth"});
 };
 
 renderDaily();
-renderCodex();
-if(settings.reader) $("#t-reader").classList.add("on");
 loadShared();
 window.addEventListener("hashchange", ()=>{ if(location.hash.indexOf("#r=") === 0) loadShared(); });
 </script>
